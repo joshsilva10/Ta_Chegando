@@ -1,0 +1,216 @@
+@font-face {
+    font-family: DKWoolwich;
+    src: local(DKWoolwich), url(../files/font/DKWoolwich.otf);
+}
+
+/*index*/
+
+div#menu {
+    background-color: #dbf6e9;
+    width: 40%;
+    height: 40%;
+    margin: 0% 20% 0% 25%;
+    border-radius: 10px;
+    padding: 4%;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.349);
+}
+
+div#header {
+    width: 40%;
+    height: 25%;
+    margin: 0% 0% 0% 43%;
+}
+
+button:hover {
+    transition: all 0.5s linear;
+}
+
+button {
+    padding: 5%;
+    border: none;
+    background-color: #FFC93C;
+    width: 90%;
+    height: 45%;
+    position: center;
+    border-radius: 10px;
+    margin: 0 0 3% 6%;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.349);
+    font-family: DKWoolwich;
+    color: #31326f;
+    font-size: 150%;
+}
+
+button:hover {
+    text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.349);
+    background-color: #31326f;
+    color: #dbf6e9;
+    width: 95%;
+    height: 45%;
+    margin: 0 0 2% 4%;
+    transition: all 0.75s linear;
+    font-size: 160%;
+}
+
+body {
+    background: rgb(157, 223, 211);
+    background: linear-gradient(90deg, rgba(157, 223, 211, 1) 1%, rgba(49, 50, 111, 1) 29%, rgba(49, 50, 111, 1) 94%, rgba(157, 223, 211, 1) 100%);
+    width: device-width;
+    height: device-height;
+}
+
+img#icon {
+    padding-left: 0%;
+    width: 32%;
+}
+
+/*Login*/
+
+div#headerLogin {
+    background-color: #dbf6e94b;
+    border-radius: 16px;
+    margin-bottom: 1%;
+    margin-top: -10pt;
+    height: 5%;
+}
+
+div#Login {
+    background-color: #dbf6e9;
+    width: 38%;
+    height: 40%;
+    margin: 0% 20% 0% 28%;
+    border-radius: 10px;
+    padding: 4%;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.349);
+}
+
+div#login {
+    margin-top: 1%;
+    display: block;
+}
+
+div#opc2 {
+    width: 90%;
+    margin: 1% 0% 0% 25%;
+}
+
+button#login {
+    padding: 5%;
+    border: none;
+    background-color: #FFC93C;
+    width: 45%;
+    height: 29%;
+    position: center;
+    border-radius: 10px;
+    margin: 1% 0 3% 6%;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.349);
+    font-family: DKWoolwich;
+    color: #31326f;
+    font-size: 100%;
+}
+
+button#login:hover {
+    text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.349);
+    background-color: #31326f;
+    color: #dbf6e9;
+    width: 46%;
+    height: 30%;
+    margin: 1% 0 3% 6%;
+    transition: all 0.75s linear;
+    font-size: 105%;
+}
+
+div#corpo {
+    width: 100%;
+    margin: auto;
+}
+
+input {
+    width: 70%;
+    margin: 1% 0% 0% 10%;
+    border-style: groove;
+    border-radius: 5pt;
+    border-color: rgba(128, 128, 128, 0.24);
+    background-color: #31326fc2;
+    padding: 5%;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.349);
+}
+
+::placeholder {
+    color: whitesmoke;
+}
+
+div#recu {
+    width: 55%;
+    display: flexbox;
+    margin: 1% 20% 2% 28%;
+    text-decoration: none;
+}
+
+.clickon{
+    cursor: pointer;
+}
+p#recup {
+    width: 10%;
+    display: inline;
+    padding: 6%;
+    font-size: 90%;
+    font-family: DKWoolwich;
+    color: #31326f;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1 {
+    font-family: DKWoolwich;
+    color: #31326f;
+    font-size: 210%;
+}
+
+div#recu2 {
+    width: 55%;
+    display: flexbox;
+    margin: 1% 20% 2% 26%;
+    text-decoration: none;
+}
+
+
+p#recup2 {
+    width: 10%;
+    display: inline;
+    padding: 10%;
+    font-size: 90%;
+    font-family: DKWoolwich;
+    color: #31326f;
+}
+
+
+h2{
+
+    font-family: DKWoolwich;
+    color: #31326f;
+    font-size: 100%;
+    margin: 4% 0% 0% 10%;
+}
+
+
+input#tpcnhA, #tpcnhB, #tpcnhC , #tpcnhD , #tpcnhE,  #tpMoto, #tpCarro, #tpCaminhao, #tpVan {
+    width: auto  !important;
+    margin: 4% 0% 4% 10%  !important;
+    border-radius: 5pt  !important;
+    padding: 2% !important;
+    box-shadow: none !important;
+    margin: 1% 0% 2% 10% !important;
+}
+
+
+
+
+h2#veiculos{
+
+    font-family: DKWoolwich;
+    color: #31326f;
+    font-size: 100%;
+    margin: 1% 0% 4% 10%;
+}
