@@ -167,6 +167,9 @@ h1 {
     color: #31326f;
     font-size: 210%;
 }
+h1#form {
+    text-align: center;
+}
 
 div#recu2 {
     width: 55%;
@@ -213,4 +216,11 @@ h2#veiculos{
     color: #31326f;
     font-size: 100%;
     margin: 1% 0% 4% 10%;
+}
+
+
+div#map{
+    width: 500px;
+    height: 500px;
+    background-color: antiquewhite;
 }

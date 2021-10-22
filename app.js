@@ -4,6 +4,7 @@ const Cliente = require("./cliente");
 const bodyParser = require('body-parser');
 const sequelize = require('./db');
 const {createCli} = require('./crud');
+const Crud = require('./crud');
 //const { Sequelize } = require('sequelize/types');
 
 app.set('view engine', 'ejs');
@@ -35,24 +36,73 @@ app.get('/cadastroent', function(req, res){
     res.render('../views/cadastroent');
 })
 
-app.post('/cadastrado', function(req, res){ 
-     
-    Cliente.create({
-        nome: req.body.nome,
-	    sobrenome: req.body.sobrenome,
-        senha: req.body.password,
-        email: req.body.txtEmail,
-        dataNasc: req.body.data,
-        cpf: req.body.cpf
-        
-    }).then(function(){
+app.post('/cadastro', function(req, res){
+
+    function cliObj(){
+        var Cli          = {};
+        return Cli;
+    }
+    
+    let cadCli       = cliObj();
+    cadCli.nome      = req.body.nome;
+    cadCli.sobrenome = req.body.sobrenome;
+    cadCli.senha     = req.body.password
+    cadCli.email      = req.body.txtEmail
+    cadCli.dataNasc  = req.body.data
+    cadCli.cpf       = req.body.cpf
+    console.log(cadCli);
+    //Crud.create(cadCli);
+    //Crud.create(cadCli)
+    let result = (async ()=>{
+        console.log('cadCli');
+        await Crud.createCli(cadCli)
+    })();
+    result.then(function(){
         //res.redirect('/save')
         res.render('../views/login');
     }).catch(function(erro){
         res.send("nao cadastrado "+erro)
     })
     
-    //res.render('cadastro');
+})
+
+app.post('/login', function(req, res){
+
+    function loginObj(){
+        var Cli          = {};
+        return Cli;
+    }
+    
+    let loginCli       = loginObj();
+    
+    loginCli.senha     = req.body.txtPswd
+    loginCli.email      = req.body.txtEmail
+    console.log(loginCli);
+
+    let validator = (async ()=>{
+        console.log('loginCli');
+        const val = await Crud.valLogin(loginCli)
+        if(val.email == loginCli.email && val.senha == loginCli.senha){
+            return true
+        }else{
+            return false
+        }
+        //console.log("val1 "+val.sobrenome)
+        //return val;
+
+    })();
+    //console.log("val"+validator.dataValues.nome)
+    //Promise.resolve(validator)
+    //Promise.reject(validator)
+    
+    validator.then(function(){
+        //res.redirect('/save')
+        res.render('../views/menuprincipal');
+    }).catch(function(erro){
+        //window.alert("nao cadastrado "+erro)
+        res.send("nao cadastrado "+erro)
+    })
+    
 })
 
 

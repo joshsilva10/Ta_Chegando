@@ -43,7 +43,8 @@
         dataNasc: {
             type: Sequelize.DATEONLY
         },
-        cpf: {type: Sequelize.STRING}
+        cpf: {type: Sequelize.STRING,
+              unique: true}
     })
      
     module.exports = Cliente ;    
