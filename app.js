@@ -23,6 +23,9 @@ app.get('/home', function(req, res){
 app.get('/login', function(req, res){
     res.render('../views/login');
 })
+app.get('/menuprincipal', function(req, res){
+    res.render('../views/menuprincipal');
+})
 app.get('/recuperar', function(req, res){
     res.render('../views/recuperar');
 })
@@ -35,6 +38,7 @@ app.get('/cadastroemp', function(req, res){
 app.get('/cadastroent', function(req, res){
     res.render('../views/cadastroent');
 })
+
 
 app.post('/cadastro', function(req, res){
 
