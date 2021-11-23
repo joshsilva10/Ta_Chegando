@@ -1,5 +1,6 @@
 const database = require('./db');
 const Cliente  = require('./cliente');
+const Entregador  = require('./entregador');
 
 var  CrudCli = {
         //-----------CREATE CLIENTE--------------\\
@@ -8,7 +9,7 @@ var  CrudCli = {
  
         try {
             const resultado = await database.sync();
-            console.log(resultado);
+           // console.log(resultado);
             //resultado();
         } catch (error) {
             console.log(error);
@@ -22,14 +23,14 @@ var  CrudCli = {
             dataNasc: cliObj.dataNasc, //'1993-08-25',
             cpf: cliObj.cpf //'09703191425'
         })
-        console.log(resultadoCreate);
+        //console.log(resultadoCreate);
     },
     async valLogin(loginObj){
 
         try {
             const resultado = await database.sync();
             //console.log(resultado);
-            resultado();
+            //resultado();
         } catch (error) {
             console.log(error);
         }
@@ -42,14 +43,75 @@ var  CrudCli = {
         
         var teste = artigos
         return teste
+        //console.log(teste)
         //console.log("artigo " + artigos.dataValues.nome)
 
     })
     //console.log(cli);
     return cli;
-    console.log("artigo " + cli.dataValues.nome)
+    //console.log("artigo " + cli.dataValues.nome)
     //const cliPk = await Cliente.findByPk(1);
     //console.log(cliPk);
+
+    },
+
+    async valLoginEnt(loginObj){
+
+        try {
+            const resultado = await database.sync();
+            //console.log(resultado);
+            //resultado();
+        } catch (error) {
+            console.log(error);
+        }
+
+
+    const cli = await Entregador.findOne({
+        where:{email:loginObj.email,
+        senha:loginObj.senha}
+    }).then(function(artigos){
+        
+        var teste = artigos
+        return teste
+        //console.log(teste)
+        //console.log("artigo " + artigos.dataValues.nome)
+
+    })
+    //console.log(cli);
+    return cli;
+    //console.log("artigo " + cli.dataValues.nome)
+    //const cliPk = await Cliente.findByPk(1);
+    //console.log(cliPk);
+
+    },
+
+
+    
+
+    async createEnt(EntObj){
+
+        try {
+            const resultado = await database.sync();
+            //console.log(resultado);
+            //resultado();
+        } catch (error) {
+           // console.log(error);
+        }
+
+        const resultadoCreateEnt = await Entregador.create({
+            nome: EntObj.nome,// 'josue',
+            sobrenome: EntObj.sobrenome, //'silva',
+            email: EntObj.email, //'josue.gd10@gmail.com',
+            senha: EntObj.senha, //'texuco',
+            dataNasc: EntObj.dataNasc, //'1993-08-25',
+            cpf: EntObj.cpf ,
+            cnh: EntObj.cnh,// 'josue',
+            veiculo: EntObj.veiculo, //'silva',
+            placa: EntObj.placa, //'josue.gd10@gmail.com',
+            //idcliente: EntObj.CliId, //'texuco',
+            //'09703191425'
+        })
+        //console.log(resultadoCreateEnt);
 
     },
 
@@ -91,7 +153,7 @@ const readCli = async () => {
     try {
         const resultado = await database.sync();
         //console.log(resultado);
-        resultado();
+        //resultado();
     } catch (error) {
         console.log(error);
     }

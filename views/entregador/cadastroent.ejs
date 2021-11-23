@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/style.css">
+    <title>Tá Chegando - Cadastrar</title>
+    <link rel="icon" href="/files/Icon.png">
+    <script  src="/js/local.js"></script>
+</head>
+
+<body>
+    <header>
+        <div id="headerLogin">
+            <a href="home"><img id="iconLogin" src="./files/Icon.png" width="100px" alt="icone"></a>
+        </div>
+    </header>
+    <main>
+        <div id="Login">
+
+            <div id="corpo">
+                <form id='form' method="POST">
+                <h1>Cadastrar</h1>
+
+                <input type="text" maxlength="11" name="cpf" id="cpf" placeholder="CPF" required>
+                <input type="text" name="nome" id="nome" placeholder="Nome" required>
+                <input type="text" name="sobrenome" id="sobrenome" placeholder="Sobrenome" required>
+                <h2>Data de nascimento: </h2>
+                <input type="date" name="data" id="data" placeholder="Data de Nascimento" required>
+                <h2>Selecione o correspondente as suas habilitações: </h2>
+                <input type="checkbox" id="tpcnhA" name="tpcnhA" value="A">
+                <label for="tpcnhA">A</label>
+                <input type="checkbox" id="tpcnhB" name="tpcnhB" value="B">
+                <label for="tpcnhB">B</label>
+                <input type="checkbox" id="tpcnhC" name="tpcnhC" value="C">
+                <label for="tpcnhC">C</label>
+                <input type="checkbox" id="tpcnhD" name="tpcnhD" value="D">
+                <label for="tpcnhD">D</label>
+                <input type="checkbox" id="tpcnhE" name="tpcnhE" value="E">
+                <label for="tpcnhE">E</label>
+
+                <h2 id="veiculos">Selecione o tipo do seu veículo: </h2>
+                <input type="radio" id="tpMoto" name="Moto" value="moto">
+                <label for="tpveiculo">Moto</label><br>
+                <input type="radio" id="tpCarro" name="Carro" value="carro">
+                <label for="tpveiculo">Carro</label><br>
+                <input type="radio" id="tpCaminhao" name="Caminhao" value="caminhão">
+                <label for="tpveiculo">Caminhão</label><br>
+                <input type="radio" id="tpVan" name="Van" value="van">
+                <label for="tpveiculo">Van</label><br>
+
+                <input type="text"  maxlength="7" name="txtPlaca" id="txtPlaca" placeholder="Placa de Veiculo" required>
+                <input type="email" name="txtEmail" id="txtEmail" placeholder="Email" required>
+                <input type="email" name="txtEmail2" id="txtEmail2" placeholder="Repita o email" required>
+                <input type="password" name="password" id="pswd" placeholder="Senha" required>
+                <input type="password" name="confirmpassword" id="cpswd" placeholder="Repita a senha" required>
+           
+
+            </div>
+            <div id="opc2">
+                <button type="submit" id="login"> Cadastrar</button>
+            </div>
+            </form>
+        </div>
+    </main>
+    <footer>
+
+    </footer>
+    <script src="cliente.js"></script>
+    <script src="entregador.js"></script>
+</body>
+
+</html>

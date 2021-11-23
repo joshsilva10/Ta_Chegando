@@ -1,5 +1,78 @@
+const Sequelize = require('sequelize');
+const database = require('./db');
 
-class Entregador extends Cliente {
+const Entregador = database.define('entregadore',{
+
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
+    },
+    nome: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    sobrenome: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+    },
+    senha: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        is: /^[0-9a-f]{64}$/i
+    },
+    dataNasc: {
+        type: Sequelize.DATEONLY
+    },
+    cpf: {type: Sequelize.STRING,
+          unique: true},
+   cnh: {
+       type: Sequelize.CHAR(1),
+     //  allowNull: false
+
+   },
+   veiculo: {
+       type: Sequelize.STRING,
+      // allowNull: false
+   },
+
+   placa: {
+       type: Sequelize.STRING,
+       allowNull: false
+   }
+  
+})
+
+module.exports = Entregador ;    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*class Entregador extends Cliente {
     constructor(cpf, nome, sobrenome, dtNasc, email, senha, cnhA, cnhB, cnhC, cnhD, cnhE, tpVeiculo, placaVeiculo){
         super(cpf, nome, sobrenome, dtNasc, email, senha)
         this.cnhA = cnhA
@@ -20,3 +93,4 @@ class Entregador extends Cliente {
 const mc = new Entregador(12345678912,'th')
 
 mc.cadastrarent()
+*/

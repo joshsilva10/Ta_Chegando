@@ -2,7 +2,7 @@
 //const createCli = require('../../crud');
 //import {createCli} from "../../crud.js";
 
-
+//import adiciOnar from "../../firebase";
 
 //import crud from '../../crud';
 function logar(a){
@@ -108,6 +108,7 @@ function mapInit() {
       if (marker) {
         // Marker already created - Move it
         marker.setPosition(newPoint);
+        //upTracker(newPoint[0], newPoint[1])
       }
       else {
         // Marker does not exist - Create it

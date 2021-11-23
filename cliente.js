@@ -12,10 +12,10 @@
     }*/
 
 
-    const Sequelize = require('sequelize');
-    const database = require('./db');
+const Sequelize = require('sequelize');
+const database = require('./db');
      
-    const Cliente = database.define('cliente', {
+const Cliente = database.define('cliente', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
