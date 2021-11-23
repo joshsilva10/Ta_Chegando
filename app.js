@@ -46,9 +46,6 @@ app.get('/menuprincipal', function(req, res){
 app.get('/menuprincipal-entregador', function(req, res){
     res.render('../views/entregador/menuprincipal-entregador');
 })
-app.get('/menuprincipal', function(req, res){
-    res.render('../views/menuprincipal');
-})
 app.get('/recuperar', function(req, res){
     res.render('../views/recuperar');
 })
