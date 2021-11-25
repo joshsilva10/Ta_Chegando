@@ -1,6 +1,7 @@
 const database = require('./db');
 const Cliente  = require('./cliente');
 const Entregador  = require('./entregador');
+const Rastreio  = require('./rastreio');
 
 var  CrudCli = {
         //-----------CREATE CLIENTE--------------\\
@@ -115,7 +116,28 @@ var  CrudCli = {
 
     },
 
+
+    async createRastreio(cliObj)  {
+    
+ 
+        try {
+            const resultado = await database.sync();
+           // console.log(resultado);
+            //resultado();
+        } catch (error) {
+            console.log(error);
+        }
+    
+        const resultadoCreate = await Rastreio.create({
+            lat: cliObj.lat,// 'josue',
+            long: cliObj.long
+              })
+        //console.log(resultadoCreate);
+    }
+
 }
+
+
 
        //-----------CREATE--------------\\
 /*const createCli =  async (cliObj) => {

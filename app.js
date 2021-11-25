@@ -10,6 +10,10 @@ const Crud = require('./crud');
 //const createtest = require('./firebase');
 const adiciOnar = require("./firebase")
 //const {db} = require('firebase')
+//const mapa = require("https://maps.googleapis.com/maps/api/js?key=AIzaSyAC1DXQau7-c5Pdzt0na-FA5P2VcJF8Zus&callback=mapInit")
+
+
+
 
 var valor
 //var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
@@ -33,6 +37,8 @@ app.get('/home', function(req, res){
     res.render('../views/index');
 })
 app.get('/login', function(req, res){
+    
+    
     //adiciOnar.upTracker('')
     res.render('../views/cliente/login');
 })
@@ -44,6 +50,9 @@ app.get('/menuprincipal', function(req, res){
     res.render('../views/cliente/menuprincipal');
 })
 app.get('/menuprincipal-entregador', function(req, res){
+   
+    
+
     res.render('../views/entregador/menuprincipal-entregador');
 })
 app.get('/recuperar', function(req, res){

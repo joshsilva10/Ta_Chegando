@@ -1,10 +1,18 @@
-//const Cliente = require('../../cliente');
-//const createCli = require('../../crud');
-//import {createCli} from "../../crud.js";
+import { initializeApp } from "firebase/app"
+import { getFirestore, collection, addDoc, setDoc , doc } from "firebase/firestore"
 
-//import adiciOnar from "../../firebase";
+/*
+const firebaseApp = initializeApp({
+    apiKey: "AIzaSyAc-8qZIk7sIMdzy1R3TIsSsPtUxM52JQ8",
+    authDomain: "ta-chegando-final.firebaseapp.com",
+    projectId: "ta-chegando-final"
+});
+*/
 
-//import crud from '../../crud';
+
+const db = getFirestore();
+
+
 function logar(a){
     localStorage.setItem("cliente", a);
 }
@@ -104,9 +112,12 @@ function mapInit() {
     navigator.geolocation.getCurrentPosition(function(position) {  
       var newPoint = new google.maps.LatLng(position.coords.latitude, 
                                             position.coords.longitude);
+        localStorage.setItem("latitude", position.coords.latitude)
+        localStorage.setItem("longitude", position.coords.longitude)
         console.log("geolocation")
       if (marker) {
         // Marker already created - Move it
+        
         marker.setPosition(newPoint);
         //upTracker(newPoint[0], newPoint[1])
       }
@@ -131,4 +142,56 @@ function mapInit() {
     alert('W3C Geolocation API is not available');
 }
 }
+
+
+
+function autoUpdateEnt() {
+    navigator.geolocation.getCurrentPosition(function(position) {  
+        var marker = null;
+        var ref = null;
+      var newPoint = new google.maps.LatLng(position.coords.latitude, 
+                                            position.coords.longitude);
+        console.log("geolocation")
+        console.log(position.coords.latitude)
+        if(ref){
+        try {
+            const docRef = await addDoc(collection(db, "rastreio"), {
+              lat: position.coords.latitude,
+              long: position.coords.longitude
+            });
+            console.log("Document written with ID: ", docRef.id);
+            ref = docRef.id;
+          } catch (e) {
+            console.error("Error adding document: ", e);
+          }
+        }else{
+            await setDoc(doc(db, "rastreio", ref), {
+                lat: position.coords.latitude,
+                long: position.coords.longitude
+              });
+
+        }
+
+
+      if (marker) {
+        // Marker already created - Move it
+        
+        marker.setPosition(newPoint);
+        //upTracker(newPoint[0], newPoint[1])
+      }
+      else {
+        // Marker does not exist - Create it
+        marker = new google.maps.Marker({
+          position: newPoint
+         // map: map
+        });
+      }
+  
+      // Center the map on the new position
+     // map.setCenter(newPoint);
+    }); 
+  
+    // Call the autoUpdate() function every 5 seconds
+    setTimeout(autoUpdateEnt, 5000);
+  }
 //openEmp()
