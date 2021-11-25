@@ -13,6 +13,23 @@ const adiciOnar = require("./firebase")
 //const mapa = require("https://maps.googleapis.com/maps/api/js?key=AIzaSyAC1DXQau7-c5Pdzt0na-FA5P2VcJF8Zus&callback=mapInit")
 
 
+//app.use('/scripts', express.static(__dirname + '/node_modules/firebase/firestore/dist/'));
+
+app.get('/script.js', function(req, res) {
+    res.sendFile(__dirname + '/node_modules/firebase/firebase-firestore.js');
+});
+app.get('/fireb.js', function(req, res) {
+    res.sendFile(__dirname + '/node_modules/firebase/firebase-app.js');
+});
+app.get('/firebase-firestore.js.map', function(req, res) {
+    res.sendFile(__dirname + '/node_modules/firebase/firebase-firestore.js.map');
+});
+app.get('/firebase-app.js.map', function(req, res) {
+    res.sendFile(__dirname + '/node_modules/firebase/firebase-app.js.map');
+});
+
+
+
 
 
 var valor
