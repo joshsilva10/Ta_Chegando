@@ -2,6 +2,7 @@ const database = require('./db');
 const Cliente  = require('./cliente');
 const Entregador  = require('./entregador');
 const Rastreio  = require('./rastreio');
+const Endereco = require('./endereco');
 
 var  CrudCli = {
         //-----------CREATE CLIENTE--------------\\
@@ -40,6 +41,34 @@ var  CrudCli = {
     const cli = await Cliente.findOne({
         where:{email:loginObj.email,
         senha:loginObj.senha}
+    }).then(function(artigos){
+        
+        var teste = artigos
+        return teste
+        //console.log(teste)
+        //console.log("artigo " + artigos.dataValues.nome)
+
+    })
+    //console.log(cli);
+    return cli;
+    //console.log("artigo " + cli.dataValues.nome)
+    //const cliPk = await Cliente.findByPk(1);
+    //console.log(cliPk);
+
+    },
+    async capIdUser(cpf){
+
+        try {
+            const resultado = await database.sync();
+            //console.log(resultado);
+            //resultado();
+        } catch (error) {
+            console.log(error);
+        }
+
+
+    const cli = await Cliente.findOne({
+        where:{cpf:cpf}
     }).then(function(artigos){
         
         var teste = artigos
@@ -111,6 +140,29 @@ var  CrudCli = {
             placa: EntObj.placa, //'josue.gd10@gmail.com',
             //idcliente: EntObj.CliId, //'texuco',
             //'09703191425'
+        })
+        //console.log(resultadoCreateEnt);
+
+    },
+    async createEnd(EntObj){
+
+        try {
+            const resultado = await database.sync();
+            //console.log(resultado);
+            //resultado();
+        } catch (error) {
+           // console.log(error);
+        }
+
+        const resultadoCreateEnd = await Endereco.create({
+            cep              : EntObj.cep,
+            rua              : EntObj.rua,
+            numero           : EntObj.numero,
+            complemento      : EntObj.complemento,
+            bairro           : EntObj.bairro,
+            cidade           : EntObj.cidade,
+            uf               : EntObj.uf,
+            idcli            : EntObj.idcli
         })
         //console.log(resultadoCreateEnt);
 

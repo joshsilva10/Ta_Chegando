@@ -32,7 +32,8 @@ app.get('/firebase-app.js.map', function(req, res) {
 
 
 
-var valor
+var cpfcli
+var idcli
 //var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
 //var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
 
@@ -64,13 +65,16 @@ app.get('/login-entregador', function(req, res){
     res.render('../views/entregador/login-entregador');
 })
 app.get('/menuprincipal', function(req, res){
-    res.render('../views/cliente/menuprincipal');
+    
+        res.render('../views/cliente/menuprincipal',{nome:'josue'});
+
+    
 })
 app.get('/menuprincipal-entregador', function(req, res){
-   
-    
-
     res.render('../views/entregador/menuprincipal-entregador');
+})
+app.get('/endereco', function(req, res){
+    res.render('../views/cliente/endereco');
 })
 app.get('/recuperar', function(req, res){
     res.render('../views/recuperar');
@@ -100,6 +104,7 @@ app.post('/cadastro', function(req, res){
     cadCli.email      = req.body.txtEmail;
     cadCli.dataNasc  = req.body.data;
     cadCli.cpf       = req.body.cpf;
+    cpfcli           = req.body.cpf;
     console.log(cadCli);
     //Crud.create(cadCli);
     //Crud.create(cadCli)
@@ -109,11 +114,54 @@ app.post('/cadastro', function(req, res){
     })();
     resultCli.then(function(){
         //res.redirect('/save')
-        res.redirect('/login');
+        res.redirect('/endereco');
     }).catch(function(erro){
         res.send("nao cadastrado "+erro)
     })
     
+})
+
+app.post('/endereco', function(req, res){
+
+    function cliObj(){
+        var Cli          = {};
+        return Cli;
+    }
+
+    
+    let capuser = (async()=>{
+        let val = await Crud.capIdUser(cpfcli)
+        idcli = val.id
+
+    })() 
+    capuser.then(function(){
+    let cadEnd              = cliObj();
+    cadEnd.cep              = req.body.cep;
+    cadEnd.rua              = req.body.rua;
+    cadEnd.numero           = req.body.numero;
+    cadEnd.complemento      = req.body.complemento;
+    cadEnd.bairro           = req.body.bairro;
+    cadEnd.cidade           = req.body.cidade;
+    cadEnd.uf               = req.body.uf;
+    cadEnd.idcli            = idcli;
+
+    let cadendereco = (async()=>{
+        let val = await Crud.createEnd(cadEnd)
+
+    })()
+    cadendereco.then(function(){
+        res.redirect("/login")
+    }).catch(function(erro){
+        res.send("erro endereco"+erro)
+    })
+
+
+    }).catch(function(erro){
+        console.log("erro =",erro)
+        res.send("erro ="+erro)
+    })
+    
+
 })
 
 
@@ -169,6 +217,7 @@ app.post('/login', function(req, res){
         //console.log('loginCli');
         const val = await Crud.valLogin(loginCli)
         if(val.email == loginCli.email && val.senha == loginCli.senha){
+            cpfcli = val.cpf
             
             return true
         }else{
@@ -209,6 +258,7 @@ app.post('/login-entregador', function(req, res){
         //console.log('loginCli');
         const val = await Crud.valLoginEnt(loginCli)
         if(val.email == loginCli.email && val.senha == loginCli.senha){
+            cpfcli = val.cpf
             
             return true
         }else{

@@ -49,6 +49,7 @@ const db = getFirestore(app);
            p.then(function(v){
              console.log("agora vai",v.id)
              ref = v.id
+             console.log("agora vai ref",ref)
            })
 
             console.log("Document written with ID if: ", ref);
@@ -75,7 +76,7 @@ const db = getFirestore(app);
               var re = upfireb(position.coords.latitude,position.coords.longitude)
               var p = Promise.resolve(re)
            p.then(function(v){
-             console.log("agora vai else",v.id)
+             console.log("agora vai else",v)
              
            })
            //})()
@@ -129,7 +130,7 @@ const db = getFirestore(app);
   }
 
   async function upfireb(lat,long){
-    const docRefup = await updateDoc(doc(db, "rastreio", ref.id), {
+    const docRefup = await updateDoc(doc(db, "rastreio", ref), {
         lat: lat,
         long: long
       }).then(function(artigos){
@@ -137,7 +138,7 @@ const db = getFirestore(app);
         console.log("artigos",artigos)
         return up
       })
-      console.log("teste",docRefup.id)
+      console.log("teste",docRefup)
      //var re = docRefup.id
       return docRefup
   }
