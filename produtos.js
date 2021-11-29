@@ -10,19 +10,20 @@ const Produtos = database.define('produto', {
         },
         cpfCliente: {type: Sequelize.STRING
               },
+        descricao: {type: Sequelize.STRING
+              },
         cpfEntregador: {type: Sequelize.STRING
                 },
         codRastreio: {type: Sequelize.STRING,
             unique: true
         },
-        endereco:{
-            numero:{type: Sequelize.STRING},
-            rua:{type: Sequelize.STRING},
-            cep: {type: Sequelize.STRING},
-            bairro: {type: Sequelize.STRING},
-            cidade:{type: Sequelize.STRING},
-            uf:{type: Sequelize.STRING}
-        }
+        numero:{type: Sequelize.STRING},
+        rua:{type: Sequelize.STRING},
+        cep: {type: Sequelize.STRING},
+        bairro: {type: Sequelize.STRING},
+        cidade:{type: Sequelize.STRING},
+        uf:{type: Sequelize.STRING}
+        
     })
      
     module.exports = Produtos ;

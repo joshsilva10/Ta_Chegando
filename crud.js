@@ -3,6 +3,7 @@ const Cliente  = require('./cliente');
 const Entregador  = require('./entregador');
 const Rastreio  = require('./rastreio');
 const Endereco = require('./endereco');
+const Produtos = require('./produtos');
 
 var  CrudCli = {
         //-----------CREATE CLIENTE--------------\\
@@ -155,6 +156,29 @@ var  CrudCli = {
         }
 
         const resultadoCreateEnd = await Endereco.create({
+            cep              : EntObj.cep,
+            rua              : EntObj.rua,
+            numero           : EntObj.numero,
+            complemento      : EntObj.complemento,
+            bairro           : EntObj.bairro,
+            cidade           : EntObj.cidade,
+            uf               : EntObj.uf,
+            idcli            : EntObj.idcli
+        })
+        //console.log(resultadoCreateEnt);
+
+    },
+    async createProd(EntObj){
+
+        try {
+            const resultado = await database.sync();
+            //console.log(resultado);
+            //resultado();
+        } catch (error) {
+           // console.log(error);
+        }
+
+        const resultadoCreateProd = await Produtos.create({
             cep              : EntObj.cep,
             rua              : EntObj.rua,
             numero           : EntObj.numero,

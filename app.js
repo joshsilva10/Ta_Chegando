@@ -60,6 +60,44 @@ app.get('/login', function(req, res){
     //adiciOnar.upTracker('')
     res.render('../views/cliente/login');
 })
+
+app.get('/produtos', function(req, res){
+    res.render('../views/empresa/produtos');
+})
+app.post('/produtos', function(req, res){
+    function cliObj(){
+        var Cli          = {};
+        return Cli;
+    }
+    
+    let prod       = cliObj();
+    prod.produto      = req.body.produto;
+    prod.descricao = req.body.descricao;
+    prod.codRastreio     = req.body.password;
+    prod.numero      = ;
+    prod.rua  = ;
+    prod.cep       = ;
+    prod.bairro           = ;
+    prod.cidade           = ;
+    prod.uf           = ;
+    console.log(prod);
+    //Crud.create(cadCli);
+    //Crud.create(cadCli)
+    let resultCli = (async ()=>{
+        console.log('cadCli');
+        await Crud.createCli(cadCli)
+    })();
+    resultCli.then(function(){
+        //res.redirect('/save')
+        res.redirect('/endereco');
+    }).catch(function(erro){
+        res.send("nao cadastrado "+erro)
+    })
+    
+
+    //res.render('../views/empresa/produtos');
+})
+
 app.get('/login-entregador', function(req, res){
     
     res.render('../views/entregador/login-entregador');

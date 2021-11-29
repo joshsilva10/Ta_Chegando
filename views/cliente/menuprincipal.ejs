@@ -12,9 +12,15 @@
     async defer></script>
 </head>
 <body>
-    <%=nome%>
+    <%=nome%><br>
+    <%for(var i=0;i<nome.length;i++) {%>
+        <tr>
+            <td><a href=""><%=nome%></a></td>
+            
+        </tr><br>
+    <%}%>
 
-    <div id="map"></div>
+   <!----- <div id="map"></div>-->
 </body>
 <script>
     
