@@ -76,7 +76,7 @@ const firebaseConfig = {
   const app = initializeApp(firebaseConfig);
   //const db = collection('Firestore');
   //const db = collection('Firestore', 'Tracker','uID');
-  const db = getFirestore();
+  const db = getFirestore(app);
   const colect = collection(db,'tracker')
 
 
@@ -105,6 +105,22 @@ const firebaseConfig = {
           console.log(`${doc.id} => ${doc.data().cliente}`);
 })
   },
+
+  async fireb(){
+    const docRef = await addDoc(collection(db, "rastreio"), {
+        lat: '',
+        long: ''
+      }).then(function(artigos){
+        var up = artigos
+        console.log("artigos",up)
+        return up
+      })
+      //console.log("teste",docRef.id)
+     //var re = docRef.id
+      return docRef;
+  },
+
+
   async upTracker(obj,obj1){
     const trackRef = doc(db, "tracker", "ZQrSES9R9qDgk8geZF0a");
 

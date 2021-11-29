@@ -10,6 +10,10 @@ const Produtos = database.define('produto', {
         },
         cpfCliente: {type: Sequelize.STRING
               },
+        cpfEmpresa: {type: Sequelize.STRING
+              },
+        produto:{ type: Sequelize.STRING
+        },
         descricao: {type: Sequelize.STRING
               },
         cpfEntregador: {type: Sequelize.STRING
@@ -17,12 +21,8 @@ const Produtos = database.define('produto', {
         codRastreio: {type: Sequelize.STRING,
             unique: true
         },
-        numero:{type: Sequelize.STRING},
-        rua:{type: Sequelize.STRING},
-        cep: {type: Sequelize.STRING},
-        bairro: {type: Sequelize.STRING},
-        cidade:{type: Sequelize.STRING},
-        uf:{type: Sequelize.STRING}
+        endEmpresa:{type: Sequelize.INTEGER},
+        endCliente:{type: Sequelize.INTEGER}
         
     })
      

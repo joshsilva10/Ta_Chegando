@@ -5,7 +5,7 @@ var fs = require('fs');
 const Cliente = require("./cliente");
 const bodyParser = require('body-parser');
 const sequelize = require('./db');
-const {createCli} = require('./crud');
+//const {createCli} = require('./crud');
 const Crud = require('./crud');
 //const createtest = require('./firebase');
 const adiciOnar = require("./firebase")
@@ -34,6 +34,11 @@ app.get('/firebase-app.js.map', function(req, res) {
 
 var cpfcli
 var idcli
+var endecli
+var endeemp
+var idemp
+var cpfemp
+
 //var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
 //var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
 
@@ -55,9 +60,6 @@ app.get('/home', function(req, res){
     res.render('../views/index');
 })
 app.get('/login', function(req, res){
-    
-    
-    //adiciOnar.upTracker('')
     res.render('../views/cliente/login');
 })
 
@@ -65,42 +67,90 @@ app.get('/produtos', function(req, res){
     res.render('../views/empresa/produtos');
 })
 app.post('/produtos', function(req, res){
+    var trackid
     function cliObj(){
         var Cli          = {};
         return Cli;
     }
-    
     let prod       = cliObj();
-    prod.produto      = req.body.produto;
-    prod.descricao = req.body.descricao;
-    prod.codRastreio     = req.body.password;
-    prod.numero      = ;
-    prod.rua  = ;
-    prod.cep       = ;
-    prod.bairro           = ;
-    prod.cidade           = ;
-    prod.uf           = ;
-    console.log(prod);
-    //Crud.create(cadCli);
-    //Crud.create(cadCli)
-    let resultCli = (async ()=>{
-        console.log('cadCli');
-        await Crud.createCli(cadCli)
-    })();
-    resultCli.then(function(){
-        //res.redirect('/save')
-        res.redirect('/endereco');
-    }).catch(function(erro){
-        res.send("nao cadastrado "+erro)
-    })
-    
+    let capuser = (async()=>{
+        let val = await Crud.capIdUser(req.body.cpf)
+        idcli = val.id
 
+    })() 
+    
+    capuser.then(function(){
+            let endcli=(async()=>{
+                let val = await Crud.capend(idcli)
+                endecli = val.id
+        
+            })()
+
+            endcli.then(function(){
+                let endemp = (async()=>{
+                    let val = await Crud.capend(idemp)
+                    endeemp = val.id
+            
+                })()
+
+                endemp.then(function(){
+                    let track = (async()=>{
+                        let val = await adiciOnar.fireb()
+                        trackid = val.id
+                
+                    })()
+
+                    track.then(function(){
+
+                            prod.produto         = req.body.produto;
+                            prod.descricao       = req.body.descricao;
+                            prod.codRastreio     = trackid;
+                            prod.cpfCliente      = req.body.cpf;
+                            prod.cpfEmpresa      = cpfemp;
+                            prod.endCliente      = endecli;
+                            prod.endEmpresa      = endeemp;
+                            console.log(prod);
+                            //Crud.create(cadCli);
+                            //Crud.create(cadCli)
+                            let resultCli = (async ()=>{
+                                //console.log('cadCli');
+                                await Crud.createProd(prod)
+                                })();
+                            resultCli.then(function(){
+                                //res.redirect('/save')
+                                res.redirect('/endereco');
+                            }).catch(function(erro){
+                                res.send("nao cadastrado "+erro)
+
+                                })
+
+                    }
+
+                    ).catch(function(erro){
+                                     res.send("Erro ao criar rastreio"+erro)
+                                 })
+
+
+                }).catch(function(erro){
+                            res.send("Endereco da empresa nao encontrado"+erro)
+                         })
+
+                     }).catch(function(erro){
+                        res.send("Endereco do cliente nao encontrado"+erro)
+                     })
+                }).catch(function(erro){
+    res.send("Cliente nao encontrado"+erro)
+        })
     //res.render('../views/empresa/produtos');
 })
 
 app.get('/login-entregador', function(req, res){
     
     res.render('../views/entregador/login-entregador');
+})
+app.get('/login-empresa', function(req, res){
+    
+    res.render('../views/empresa/login-empresa');
 })
 app.get('/menuprincipal', function(req, res){
     
@@ -121,7 +171,7 @@ app.get('/cadastro', function(req, res){
     res.render('../views/cliente/cadastro');
 })
 app.get('/cadastroemp', function(req, res){
-    res.render('../views/cadastroemp');
+    res.render('../views/empresa/cadastroemp');
 })
 app.get('/cadastroent', function(req, res){
     res.render('../views/entregador/cadastroent');
@@ -213,12 +263,12 @@ app.post('/cadastroent', function(req, res){
     cadEnt.nome      = req.body.nome;
     cadEnt.sobrenome = req.body.sobrenome;
     cadEnt.senha     = req.body.password;
-    cadEnt.email      = req.body.txtEmail;
+    cadEnt.email     = req.body.txtEmail;
     cadEnt.dataNasc  = req.body.data;
     cadEnt.cpf       = req.body.cpf;
-    cadEnt.cnh = req.body.cnh;
-    cadEnt.veiculo = req.body.veiculo;
-    cadEnt.placa = req.body.txtPlaca;
+    cadEnt.cnh       = req.body.cnh;
+    cadEnt.veiculo   = req.body.veiculo;
+    cadEnt.placa     = req.body.txtPlaca;
    
    
     let resultCliEnt = (async ()=>{
@@ -231,6 +281,39 @@ app.post('/cadastroent', function(req, res){
         
             
         res.redirect('/login-entregador');
+
+                                    
+    }).catch(function(erro){
+        res.send("nao cadastrado "+erro)
+    })
+})
+
+app.post('/cadastroemp', function(req, res){
+    function cliObj(){
+        var Cli          = {};
+        return Cli;
+    }
+    
+    let cadEmp       = cliObj();
+    cadEmp.nome      = req.body.nome;
+    cadEmp.fantasia  = req.body.fantasia;
+    cadEmp.senha     = req.body.senha;
+    cadEmp.email     = req.body.email;
+    cadEmp.dataFund  = req.body.data;
+    cadEmp.cnpj      = req.body.cnpj;
+    cadEmp.tipoEmp   = req.body.tipo;
+   
+   
+    let resultCliEnt = (async ()=>{
+        //console.log('cadCli');
+        await Crud.createEmp(cadEmp)
+    })();
+
+    resultCliEnt.then(function(){
+        
+        
+            
+        res.redirect('/endereco');
 
                                     
     }).catch(function(erro){
@@ -297,6 +380,46 @@ app.post('/login-entregador', function(req, res){
         const val = await Crud.valLoginEnt(loginCli)
         if(val.email == loginCli.email && val.senha == loginCli.senha){
             cpfcli = val.cpf
+            
+            return true
+        }else{
+            return false
+        }
+        //console.log("val1 "+val.sobrenome)
+        //return val;
+
+    })();
+    //console.log("val"+validator.dataValues.nome)
+    //Promise.resolve(validator)
+    //Promise.reject(validator)
+    
+    validator.then(function(){
+        //res.redirect('/save')
+        res.redirect('/menuprincipal-entregador');
+    }).catch(function(erro){
+        //window.alert("nao cadastrado "+erro)
+        res.send("nao cadastrado "+erro)
+    })
+    
+})
+app.post('/login-empresa', function(req, res){
+
+    function loginObj(){
+        var Cli          = {};
+        return Cli;
+    }
+    
+    let loginCli       = loginObj();
+    
+    loginCli.senha     = req.body.txtPswd
+    loginCli.email      = req.body.txtEmail
+    console.log(loginCli);
+
+    let validator = (async ()=>{
+        //console.log('loginCli');
+        const val = await Crud.valLoginEmp(loginCli)
+        if(val.email == loginCli.email && val.senha == loginCli.senha){
+            cpfemp = val.cpf
             
             return true
         }else{

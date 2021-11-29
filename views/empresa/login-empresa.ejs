@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style.css">
-    <title>Tá Chegando - Endereço</title>
+    <title>Tá Chegando - Login</title>
     <link rel="icon" href="/files/Icon.png">
     <script  src="/js/local.js"></script>
 </head>
@@ -19,29 +19,27 @@
     </header>
     <main>
         <div id="Login">
-
             <div id="corpo">
                 <form id='form' method="POST">
-                <h1 id='form'>NOVO PRODUTO</h1>
-                
-                <input type="text" maxlength="11" name="produto" id="produto" placeholder="PRODUTO" required>
-                <input type="text" name="cpf" id="cpf" placeholder="CPF CLIENTE" required>
-                <input type="text" name="descricao" id="descricao" placeholder="DESCRICAO DO PRODUTO" required>
-                <input type="text" name="endempresa" id="endempresa" placeholder="ENDERECO DISTRIBUIÇÃO" required>
-                
-
+                <h1 id='form'>Entrar</h1>
+                <input type="text" name="txtEmail" id="txtEmail" placeholder="Email" required>
+                <input type="password" name="txtPswd" id="txtPswd" placeholder="Senha" required>
             </div>
             <div id="opc2">
-                <button type="submit" id="login" > Cadastrar</button>
+                <button type="submit" id="login" onclick="cadCli()"> Entrar</button>
             </div>
         </form>
+            <div id="recu">
+                <p id="recup" class="clickon" onclick="cad()">Cadastrar</p>
+                
+                <a href="recuperar"><p id="recup">Esqueceu a senha?</p></a>
+            </div>
             
         </div>
     </main>
     <footer>
-     
+
     </footer>
-        
 </body>
 
 </html>

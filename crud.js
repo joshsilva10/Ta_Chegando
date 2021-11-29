@@ -3,6 +3,7 @@ const Cliente  = require('./cliente');
 const Entregador  = require('./entregador');
 const Rastreio  = require('./rastreio');
 const Endereco = require('./endereco');
+const Empresa = require('./empresa');
 const Produtos = require('./produtos');
 
 var  CrudCli = {
@@ -25,6 +26,28 @@ var  CrudCli = {
             senha: cliObj.senha, //'texuco',
             dataNasc: cliObj.dataNasc, //'1993-08-25',
             cpf: cliObj.cpf //'09703191425'
+        })
+        //console.log(resultadoCreate);
+    },
+    async createEmp(empObj)  {
+    
+ 
+        try {
+            const resultado = await database.sync();
+           // console.log(resultado);
+            //resultado();
+        } catch (error) {
+            console.log(error);
+        }
+    
+        const resultadoCreate = await Empresa.create({
+            nome: empObj.nome,// 'josue',
+            fantasia: empObj.fantasia, //'silva',
+            email: empObj.email, //'josue.gd10@gmail.com',
+            senha: empObj.senha, //'texuco',
+            dataFund: empObj.dataFund, //'1993-08-25',
+            cnpj: empObj.cnpj,
+            tipoEmp: empObj.tipoEmp //'09703191425'
         })
         //console.log(resultadoCreate);
     },
@@ -115,7 +138,63 @@ var  CrudCli = {
     //console.log(cliPk);
 
     },
+    async valLoginEmp(loginObj){
 
+        try {
+            const resultado = await database.sync();
+            //console.log(resultado);
+            //resultado();
+        } catch (error) {
+            console.log(error);
+        }
+
+
+    const cli = await Empresa.findOne({
+        where:{email:loginObj.email,
+        senha:loginObj.senha}
+    }).then(function(artigos){
+        
+        var teste = artigos
+        return teste
+        //console.log(teste)
+        //console.log("artigo " + artigos.dataValues.nome)
+
+    })
+    //console.log(cli);
+    return cli;
+    //console.log("artigo " + cli.dataValues.nome)
+    //const cliPk = await Cliente.findByPk(1);
+    //console.log(cliPk);
+
+    },
+    async capend(capObj){
+
+        try {
+            const resultado = await database.sync();
+            //console.log(resultado);
+            //resultado();
+        } catch (error) {
+            console.log(error);
+        }
+
+
+    const end = await Endereco.findOne({
+        where:{idcli:capObj}
+    }).then(function(artigos){
+        
+        var teste = artigos
+        return teste
+        //console.log(teste)
+        //console.log("artigo " + artigos.dataValues.nome)
+
+    })
+    //console.log(cli);
+    return end;
+    //console.log("artigo " + cli.dataValues.nome)
+    //const cliPk = await Cliente.findByPk(1);
+    //console.log(cliPk);
+
+    },
 
     
 
