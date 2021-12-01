@@ -76,11 +76,13 @@ app.post('/produtos', function(req, res){
     let capuser = (async()=>{
         let val = await Crud.capIdUser(req.body.cpf)
         idcli = val.id
-
+        console.log("id cliente",idcli)
     })() 
     
     capuser.then(function(){
+            console.log("id cliente no endereco",idcli)
             let endcli=(async()=>{
+                console.log("id cliente no endereco",idcli)
                 let val = await Crud.capend(idcli)
                 endecli = val.id
         
@@ -104,6 +106,7 @@ app.post('/produtos', function(req, res){
 
                             prod.produto         = req.body.produto;
                             prod.descricao       = req.body.descricao;
+                            prod.St              = req.body.status;
                             prod.codRastreio     = trackid;
                             prod.cpfCliente      = req.body.cpf;
                             prod.cpfEmpresa      = cpfemp;
@@ -145,7 +148,7 @@ app.post('/produtos', function(req, res){
 })
 
 app.get('/login-entregador', function(req, res){
-    
+
     res.render('../views/entregador/login-entregador');
 })
 app.get('/login-empresa', function(req, res){
@@ -153,8 +156,29 @@ app.get('/login-empresa', function(req, res){
     res.render('../views/empresa/login-empresa');
 })
 app.get('/menuprincipal', function(req, res){
+
+    let seAll = (async ()=>{
+        console.log('cadCli');
+        teste = await Crud.selAllRastreio(cpfcli)
+        return teste
+    })();
+    seAll.then(async function(){
+        let result = await Promise.resolve(seAll)
+    result.then(function(v){
+
+        res.render('../views/cliente/menuprincipal',{trk:v});
+
+    }).catch(function(erro){
+        res.send("error",erro)
+        //res.render('../views/cliente/menuprincipal');
+    })         
+
+    }).catch(function(erro){
+        res.send("error",erro)
+        //res.render('../views/cliente/menuprincipal');
+    })  
     
-        res.render('../views/cliente/menuprincipal',{nome:'josue'});
+ 
 
     
 })

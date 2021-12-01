@@ -22,7 +22,8 @@ const Produtos = database.define('produto', {
             unique: true
         },
         endEmpresa:{type: Sequelize.INTEGER},
-        endCliente:{type: Sequelize.INTEGER}
+        endCliente:{type: Sequelize.INTEGER},
+        statusTrk:{type: Sequelize.STRING}
         
     })
      
