@@ -32,11 +32,15 @@ const Entregador = database.define('entregadore',{
     },
     cpf: {type: Sequelize.STRING,
           unique: true},
-   cnh: {
-       type: Sequelize.CHAR(1),
+   tipocnh: {
+       type: Sequelize.CHAR(2),
      //  allowNull: false
 
    },
+   cnh: {
+    type: Sequelize.STRING,
+   // allowNull: false
+},
    veiculo: {
        type: Sequelize.STRING,
       // allowNull: false

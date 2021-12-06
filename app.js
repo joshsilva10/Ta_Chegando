@@ -158,29 +158,24 @@ app.get('/login-empresa', function(req, res){
 app.get('/menuprincipal', function(req, res){
 
     let seAll = (async ()=>{
-        console.log('cadCli');
-        teste = await Crud.selAllRastreio(cpfcli)
+        console.log('cadCli',cpfcli);
+        teste = Crud.selAllRastreio(cpfcli)
+        console.log('cadCli teste',teste);
         return teste
     })();
-    seAll.then(async function(){
-        let result = await Promise.resolve(seAll)
-    result.then(function(v){
-
+    seAll.then(function(){
+        let result = Promise.resolve(seAll)
+        result.then(function(v){
+            console.log(v)
         res.render('../views/cliente/menuprincipal',{trk:v});
+    }).catch()         
 
     }).catch(function(erro){
-        res.send("error",erro)
-        //res.render('../views/cliente/menuprincipal');
-    })         
-
-    }).catch(function(erro){
-        res.send("error",erro)
+        res.status(erro).send(req.body)
+        //res.send("error",erro)
         //res.render('../views/cliente/menuprincipal');
     })  
-    
- 
-
-    
+        
 })
 app.get('/menuprincipal-entregador', function(req, res){
     res.render('../views/entregador/menuprincipal-entregador');
@@ -200,7 +195,9 @@ app.get('/cadastroemp', function(req, res){
 app.get('/cadastroent', function(req, res){
     res.render('../views/entregador/cadastroent');
 })
-
+app.get('/rastreio/:rastreio', function(req, res){
+    res.send('ola');
+})
 
 app.post('/cadastro', function(req, res){
 

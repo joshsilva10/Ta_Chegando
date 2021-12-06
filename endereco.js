@@ -8,13 +8,13 @@ const Endereco = database.define('endereco', {
             allowNull: false,
             primaryKey: true
         },
-        idcli: {
-            type: Sequelize.INTEGER,
-            allowNull: false
+        cpfcnpj: {
+            type: Sequelize.STRING
         },
-        
-        numero:{type: Sequelize.STRING},
-        complemento: {type: Sequelize.STRING,
+        numero:{
+            type: Sequelize.STRING},
+        complemento: {
+            type: Sequelize.STRING,
             allowNull: false},
         rua:{type: Sequelize.STRING,
             allowNull: false},

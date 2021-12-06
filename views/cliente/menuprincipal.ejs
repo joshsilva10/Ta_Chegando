@@ -12,10 +12,12 @@
     async defer></script>
 </head>
 <body>
-    <%=trk%><br>
+    
     <%for(var i=0;i<trk.length;i++) {%>
+        
+        <%=trk[i].cpfCliente%><br><br>
         <tr>
-            <td><a href=""><%=trk%></a></td>
+            <td><a href= "rastreio/<%=trk[i].codRastreio%>" ><%=trk[i].codRastreio%></a></td>
             
         </tr><br>
     <%}%>

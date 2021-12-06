@@ -287,10 +287,25 @@ var  CrudCli = {
     },
 
     async selAllRastreio(user){
-        const cli = await Produtos.findAll({
-            where:{cpfCliente:user.cpf,
+        const seall = await Produtos.findAll({
+            where:{cpfCliente:user,
                 statustrk:"A"                
-            }});
+            }}).then(res => {
+                return res.map(row => {
+                  return row.dataValues
+                });
+              })
+            
+            
+            
+            
+            //.then(function(artigos){
+        
+            //    var teste = artigos
+            //    return teste})
+                return seall
+
+
     }
 
 }
