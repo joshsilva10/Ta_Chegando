@@ -1,17 +1,25 @@
-//import { initializeApp } from "firebase/app"
-//import { getFirestore, collection, addDoc, setDoc , doc } from "firebase/firestore"
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js"
+import { getFirestore, collection, addDoc, setDoc , doc, updateDoc, onSnapshot , getDoc } from "/script.js"
 
-/*
-const firebaseApp = initializeApp({
-    apiKey: "AIzaSyAc-8qZIk7sIMdzy1R3TIsSsPtUxM52JQ8",
-    authDomain: "ta-chegando-final.firebaseapp.com",
-    projectId: "ta-chegando-final"
-});
+var referencia = document.getElementById('track').innerText
+console.log("tracking", referencia)
+const firebaseConfig = {
+  apiKey: "AIzaSyAc-8qZIk7sIMdzy1R3TIsSsPtUxM52JQ8",
+  authDomain: "ta-chegando-final.firebaseapp.com",
+  databaseURL: "https://ta-chegando-final-default-rtdb.firebaseio.com",
+  projectId: "ta-chegando-final",
+  storageBucket: "ta-chegando-final.appspot.com",
+  messagingSenderId: "652860417703",
+  appId: "1:652860417703:web:8f5bebd5c8716c48fa1d82"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
 
 
-const db = getFirestore();
-*/
+var ref
+const db = getFirestore(app);
 
 function logar(a){
     localStorage.setItem("cliente", a);
@@ -78,7 +86,11 @@ function markerMove(lat, lng){
 }
 */
 
-function mapInit() {
+
+mapInit()
+
+
+ function mapInit() {
     //var pointFix
     var lat
     var lng
@@ -108,30 +120,60 @@ function mapInit() {
   
   var marker = null;
   
-  function autoUpdate() {
-    navigator.geolocation.getCurrentPosition(function(position) {  
-      var newPoint = new google.maps.LatLng(position.coords.latitude, 
-                                            position.coords.longitude);
-        localStorage.setItem("latitude", position.coords.latitude)
-        localStorage.setItem("longitude", position.coords.longitude)
-        console.log("geolocation")
-      if (marker) {
-        // Marker already created - Move it
+  async function autoUpdate() {
+
+    const Refloc = doc(db, "rastreio", referencia)
+    const docSnap = await getDoc(Refloc)
+    /*(async()=>{
+        const teste =await getDoc(Refloc)
+        var p = Promise.resolve(teste)
+          
+        console.log(teste.lat)
+        return teste    
+    })()*/
+    //docSnap.then(function(){
+
+    //if (docSnap.exists()) {
+
         
-        marker.setPosition(newPoint);
-        //upTracker(newPoint[0], newPoint[1])
-      }
-      else {
-        // Marker does not exist - Create it
-        marker = new google.maps.Marker({
-          position: newPoint,
-          map: map
-        });
-      }
-  
-      // Center the map on the new position
-     // map.setCenter(newPoint);
-    }); 
+            var newPoint = new google.maps.LatLng(docSnap.data().lat, 
+                                                  docSnap.data().long);
+              //localStorage.setItem("latitude", docSnap.data().lat)
+              //localStorage.setItem("longitude", docSnap.data().long)
+             // localStorage.setItem("latitude", position.coords.latitude)
+             // localStorage.setItem("longitude", position.coords.longitude)
+              console.log("lat", docSnap.data().lat)
+              console.log("long", docSnap.data().long)
+            if (marker) {
+              // Marker already created - Move it
+              
+              marker.setPosition(newPoint);
+              //upTracker(newPoint[0], newPoint[1])
+            }
+            else {
+              // Marker does not exist - Create it
+              marker = new google.maps.Marker({
+                position: newPoint,
+                map: map
+              });
+            }
+        
+            // Center the map on the new position
+           // map.setCenter(newPoint);
+          
+
+    console.log("Document data:", docSnap.data());
+   // } else {
+    // doc.data() will be undefined in this case
+   // console.log("No such document!");
+   // }
+
+//}).catch(function(erro){
+    //alert("teste"+erro)
+//})
+
+
+    
   
     // Call the autoUpdate() function every 5 seconds
     setTimeout(autoUpdate, 5000);

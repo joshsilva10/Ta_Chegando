@@ -95,7 +95,7 @@ var  CrudCli = {
             bairro           : EntObj.bairro,
             cidade           : EntObj.cidade,
             uf               : EntObj.uf,
-            idcli            : EntObj.idcli
+            cpfcnpj          : EntObj.cpfcnpj
         })
         //console.log(resultadoCreateEnt);
 
@@ -111,15 +111,14 @@ var  CrudCli = {
         }
 
         const resultadoCreateProd = await Produtos.create({
-            cep              : EntObj.cep,
-            rua              : EntObj.rua,
-            numero           : EntObj.numero,
-            complemento      : EntObj.complemento,
-            bairro           : EntObj.bairro,
-            cidade           : EntObj.cidade,
-            uf               : EntObj.uf,
-            idcli            : EntObj.idcli,
-            statustrk        : EntObj.St
+            produto              : EntObj.produto,
+            descricao            : EntObj.descricao,
+            statusTrk            : EntObj.St,
+            codRastreio          : EntObj.codRastreio,
+            cpfCliente           : EntObj.cpfCliente,
+            cpfEmpresa           : EntObj.cpfEmpresa,
+            endCliente           : EntObj.endCliente,
+            endEmpresa           : EntObj.endEmpresa
         })
         //console.log(resultadoCreateEnt);
 
@@ -241,7 +240,7 @@ var  CrudCli = {
 
 
     const end = await Endereco.findOne({
-        where:{idcli : capObj.id}
+        where:{cpfcnpj : capObj}
     }).then(function(artigos){
         
         var teste = artigos
@@ -306,7 +305,28 @@ var  CrudCli = {
                 return seall
 
 
+    },
+
+    async selAllEntrega(){
+        const seall = await Produtos.findAll().then(res => {
+                return res.map(row => {
+                  return row.dataValues
+                });
+              })
+            
+            
+            
+            
+            //.then(function(artigos){
+        
+            //    var teste = artigos
+            //    return teste})
+                return seall
+
+
     }
+
+
 
 }
 

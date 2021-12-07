@@ -31,7 +31,7 @@ app.get('/firebase-app.js.map', function(req, res) {
 
 
 
-
+var cpfcnpj
 var cpfcli
 var idcli
 var endecli
@@ -83,14 +83,14 @@ app.post('/produtos', function(req, res){
             console.log("id cliente no endereco",idcli)
             let endcli=(async()=>{
                 console.log("id cliente no endereco",idcli)
-                let val = await Crud.capend(idcli)
+                let val = await Crud.capend(req.body.cpf)
                 endecli = val.id
         
             })()
 
             endcli.then(function(){
                 let endemp = (async()=>{
-                    let val = await Crud.capend(idemp)
+                    let val = await Crud.capend(cpfemp)
                     endeemp = val.id
             
                 })()
@@ -99,6 +99,7 @@ app.post('/produtos', function(req, res){
                     let track = (async()=>{
                         let val = await adiciOnar.fireb()
                         trackid = val.id
+                        console.log("tracking", trackid)
                 
                     })()
 
@@ -112,7 +113,7 @@ app.post('/produtos', function(req, res){
                             prod.cpfEmpresa      = cpfemp;
                             prod.endCliente      = endecli;
                             prod.endEmpresa      = endeemp;
-                            console.log(prod);
+                            console.log("produtos",prod);
                             //Crud.create(cadCli);
                             //Crud.create(cadCli)
                             let resultCli = (async ()=>{
@@ -158,9 +159,9 @@ app.get('/login-empresa', function(req, res){
 app.get('/menuprincipal', function(req, res){
 
     let seAll = (async ()=>{
-        console.log('cadCli',cpfcli);
+        //console.log('cadCli',cpfcli);
         teste = Crud.selAllRastreio(cpfcli)
-        console.log('cadCli teste',teste);
+       // console.log('cadCli teste',teste);
         return teste
     })();
     seAll.then(function(){
@@ -178,7 +179,33 @@ app.get('/menuprincipal', function(req, res){
         
 })
 app.get('/menuprincipal-entregador', function(req, res){
+
+    let seAll = (async ()=>{
+        //console.log('cadCli',cpfcli);
+        teste = Crud.selAllentregas()
+       // console.log('cadCli teste',teste);
+        return teste
+    })();
+    seAll.then(function(){
+        let result = Promise.resolve(seAll)
+        result.then(function(v){
+            console.log(v)
+        res.render('../views/cliente/menuprincipal',{trk:v});
+    }).catch()         
+
+    }).catch(function(erro){
+        res.status(erro).send(req.body)
+        //res.send("error",erro)
+        //res.render('../views/cliente/menuprincipal');
+    })
+
+
+
+
     res.render('../views/entregador/menuprincipal-entregador');
+})
+app.get('/menuprincipal-empresa', function(req, res){
+    res.render('../views/empresa/menuprincipal-empresa');
 })
 app.get('/endereco', function(req, res){
     res.render('../views/cliente/endereco');
@@ -196,7 +223,8 @@ app.get('/cadastroent', function(req, res){
     res.render('../views/entregador/cadastroent');
 })
 app.get('/rastreio/:rastreio', function(req, res){
-    res.send('ola');
+    res.render('../views/cliente/mapa',{rastreio:req.params.rastreio});
+   // res.send('ola '+ req.params.rastreio);
 })
 
 app.post('/cadastro', function(req, res){
@@ -238,12 +266,12 @@ app.post('/endereco', function(req, res){
     }
 
     
-    let capuser = (async()=>{
-        let val = await Crud.capIdUser(cpfcli)
-        idcli = val.id
+   // let capuser = (async()=>{
+   //     let val = await Crud.capIdUser(cpfcli)
+   //     idcli = val.id
 
-    })() 
-    capuser.then(function(){
+  //  })() 
+   // capuser.then(function(){
     let cadEnd              = cliObj();
     cadEnd.cep              = req.body.cep;
     cadEnd.rua              = req.body.rua;
@@ -252,7 +280,7 @@ app.post('/endereco', function(req, res){
     cadEnd.bairro           = req.body.bairro;
     cadEnd.cidade           = req.body.cidade;
     cadEnd.uf               = req.body.uf;
-    cadEnd.idcli            = idcli;
+    cadEnd.cpfcnpj          = cpfcnpj;
 
     let cadendereco = (async()=>{
         let val = await Crud.createEnd(cadEnd)
@@ -265,10 +293,10 @@ app.post('/endereco', function(req, res){
     })
 
 
-    }).catch(function(erro){
-        console.log("erro =",erro)
-        res.send("erro ="+erro)
-    })
+ //   }).catch(function(erro){
+ //       console.log("erro =",erro)
+ //       res.send("erro ="+erro)
+ //   })
     
 
 })
@@ -334,7 +362,7 @@ app.post('/cadastroemp', function(req, res){
         
         
             
-        res.redirect('/endereco');
+        res.redirect('/login-empresa');
 
                                     
     }).catch(function(erro){
@@ -360,6 +388,7 @@ app.post('/login', function(req, res){
         const val = await Crud.valLogin(loginCli)
         if(val.email == loginCli.email && val.senha == loginCli.senha){
             cpfcli = val.cpf
+            cpfcnpj = val.cpf
             
             return true
         }else{
@@ -440,7 +469,8 @@ app.post('/login-empresa', function(req, res){
         //console.log('loginCli');
         const val = await Crud.valLoginEmp(loginCli)
         if(val.email == loginCli.email && val.senha == loginCli.senha){
-            cpfemp = val.cpf
+            cpfemp = val.cnpj
+            cpfcnpj = val.cnpj
             
             return true
         }else{
@@ -456,7 +486,7 @@ app.post('/login-empresa', function(req, res){
     
     validator.then(function(){
         //res.redirect('/save')
-        res.redirect('/menuprincipal-entregador');
+        res.redirect('/menuprincipal-empresa');
     }).catch(function(erro){
         //window.alert("nao cadastrado "+erro)
         res.send("nao cadastrado "+erro)

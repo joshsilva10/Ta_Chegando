@@ -7,17 +7,15 @@
     <link rel="stylesheet" href="/style/style.css">
     <title>Tá Chegando - Cadastrar</title>
     <link rel="icon" href="/files/Icon.png">
-    <script  src="/js/local.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAC1DXQau7-c5Pdzt0na-FA5P2VcJF8Zus&callback=mapInit"
-    async defer></script>
+    
 </head>
 <body>
-    <button type="submit">voltar</button>
+    <h1 id="track"><%=rastreio%></h1>
+    <!--<button type="submit">voltar</button>-->
 
     <div id="map"></div>
 </body>
-<script>
-    
-    mapInit()
-</script>
+<script  src="/js/local.js" type="module"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAC1DXQau7-c5Pdzt0na-FA5P2VcJF8Zus&callback=mapInit"
+    async defer></script>
 </html>

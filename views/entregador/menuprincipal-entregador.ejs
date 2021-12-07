@@ -15,7 +15,15 @@
 </head>
 <body>
     <h1>entrei - entregador</h1>
-
+    
+    <%for(var i=0;i<trk.length;i++) {%>
+        
+        <%=trk[i].cpfCliente%><br><br>
+        <tr>
+            <td><a href= "rastreio/<%=trk[i].codRastreio%>" ><%=trk[i].codRastreio%></a></td>
+            
+        </tr><br>
+    <%}%>
     <div id="map"></div>
 </body>
 <script>
