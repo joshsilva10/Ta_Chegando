@@ -15,6 +15,10 @@ const Empresa = database.define('empresa', {
             type: Sequelize.STRING,
             allowNull: false
         },
+        telefone: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
         fantasia: {
             type: Sequelize.STRING,
             allowNull: false

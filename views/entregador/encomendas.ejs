@@ -10,8 +10,6 @@
     <script  src="/js/ajuste.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAC1DXQau7-c5Pdzt0na-FA5P2VcJF8Zus&callback=mapInit"
     async defer></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 </head>
 <body>
     <header>
@@ -20,14 +18,11 @@
         </div>
     </header>
     <div id="rastreio">
-        <a href="/cadastro-endereco" ><button type="button" class="clickon">NOVO</button></a>
         <%for(var i=0;i<trk.length;i++) {%>
-            <a href="cadendereco/<%=trk[i].id%>" ><button type="button" class="clickon"><%=trk[i].rua%>, <%=trk[i].numero%> - <%=trk[i].bairro%> - <%=trk[i].uf%></button></a>
-            <%}%>
+        <a href="rastreio/<%=trk[i].codRastreio%>" ><button type="button" class="clickon"><%=trk[i].codRastreio%></button></a>
+        <%}%>
     </div>
-    
-    
-   <!-- <div id="map"></div>-->
+   
 </body>
 
 </html>

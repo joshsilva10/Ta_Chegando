@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/style/style.css">
     <title>Tá Chegando - Cadastrar</title>
     <link rel="icon" href="/files/Icon.png">
-    <script  src="/js/local.js"></script>
+    <script  src="/js/ajuste.js"></script>
 </head>
 
 <body>
@@ -29,6 +29,7 @@
                 <input type="text" name="fantasia" id="fantasia" placeholder="Nome fantasia">
                 <h2>Data de Nascimento / Abertura: </h2>
                 <input type="date" name="data" id="data" placeholder="Data de Nascimento / Abertura" required>
+                <input type="tel" id="phone" name="phone" data-mask="(00) 00000-0000" placeholder="Telefone" pattern="[0-9]{3}-[0-9]{5}-[0-9]{4}" required>
                 <input type="email" name="email" id="email" placeholder="Email" required>
                 <input type="email" name="txtEmail" id="txtEmail2" placeholder="Repita o email" required>
                 <input type="text" name="tipo" id="tipo" placeholder="Tipo da empresa" required>

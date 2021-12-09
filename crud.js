@@ -25,7 +25,8 @@ var  CrudCli = {
             email: cliObj.email, //'josue.gd10@gmail.com',
             senha: cliObj.senha, //'texuco',
             dataNasc: cliObj.dataNasc, //'1993-08-25',
-            cpf: cliObj.cpf //'09703191425'
+            cpf: cliObj.cpf, //'09703191425'
+            telefone: cliObj.tel
         })
         //console.log(resultadoCreate);
     },
@@ -47,7 +48,8 @@ var  CrudCli = {
             senha: empObj.senha, //'texuco',
             dataFund: empObj.dataFund, //'1993-08-25',
             cnpj: empObj.cnpj,
-            tipoEmp: empObj.tipoEmp //'09703191425'
+            tipoEmp: empObj.tipoEmp, //'09703191425'
+            telefone:empObj.tel
         })
         //console.log(resultadoCreate);
     },
@@ -69,8 +71,10 @@ var  CrudCli = {
             dataNasc: EntObj.dataNasc, //'1993-08-25',
             cpf: EntObj.cpf ,
             cnh: EntObj.cnh,// 'josue',
+            tipocnh:EntObj.tpcnh,
             veiculo: EntObj.veiculo, //'silva',
             placa: EntObj.placa, //'josue.gd10@gmail.com',
+            telefone: EntObj.tel
             //idcliente: EntObj.CliId, //'texuco',
             //'09703191425'
         })
@@ -285,6 +289,20 @@ var  CrudCli = {
 
     },
 
+    async selEnd(cpfcnpj){
+        const seall = await Endereco.findAll({
+            where:{cpfcnpj: cpfcnpj                
+            }}).then(res => {
+                return res.map(row => {
+                  return row.dataValues
+                });
+              })
+            
+    return seall
+
+
+    },
+
     async selAllRastreio(user){
         const seall = await Produtos.findAll({
             where:{cpfCliente:user,
@@ -306,21 +324,13 @@ var  CrudCli = {
 
 
     },
-
     async selAllEntrega(){
         const seall = await Produtos.findAll().then(res => {
                 return res.map(row => {
                   return row.dataValues
                 });
               })
-            
-            
-            
-            
-            //.then(function(artigos){
         
-            //    var teste = artigos
-            //    return teste})
                 return seall
 
 

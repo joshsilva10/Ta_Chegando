@@ -30,6 +30,10 @@ const Cliente = database.define('cliente', {
             type: Sequelize.STRING,
             allowNull: false
         },
+        telefone: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
         email: {
             type: Sequelize.STRING,
             allowNull: false,

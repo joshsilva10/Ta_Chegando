@@ -1,4 +1,6 @@
+const { connectDatabaseEmulator } = require('@firebase/database');
 const Sequelize = require('sequelize');
+
 const database = require('./db');
      
 const Endereco = database.define('endereco', {
@@ -28,5 +30,8 @@ const Endereco = database.define('endereco', {
             allowNull: false}
         
     })
+
+   
+   
      
     module.exports = Endereco ;

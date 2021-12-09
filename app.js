@@ -158,17 +158,30 @@ app.get('/login-empresa', function(req, res){
 })
 app.get('/menuprincipal', function(req, res){
 
-    let seAll = (async ()=>{
+res.render('../views/cliente/menuprincipal');
+   
+        
+})
+app.get('/menuprincipal-entregador', function(req, res){
+
+res.render('../views/entregador/menuprincipal-entregador');
+
+})
+app.get('/menuprincipal-empresa', function(req, res){
+    res.render('../views/empresa/menuprincipal-empresa');
+})
+app.get('/endereco', function(req, res){
+    let seeEnd = (async ()=>{
         //console.log('cadCli',cpfcli);
-        teste = Crud.selAllRastreio(cpfcli)
+        teste = Crud.selEnd(cpfcnpj)
        // console.log('cadCli teste',teste);
         return teste
     })();
-    seAll.then(function(){
-        let result = Promise.resolve(seAll)
+    seeEnd.then(function(){
+        let result = Promise.resolve(seeEnd)
         result.then(function(v){
             console.log(v)
-        res.render('../views/cliente/menuprincipal',{trk:v});
+        res.render('../views/cliente/endereco',{trk:v});
     }).catch()         
 
     }).catch(function(erro){
@@ -176,39 +189,10 @@ app.get('/menuprincipal', function(req, res){
         //res.send("error",erro)
         //res.render('../views/cliente/menuprincipal');
     })  
-        
+   // res.render('../views/cliente/endereco');
 })
-app.get('/menuprincipal-entregador', function(req, res){
-
-    let seAll = (async ()=>{
-        //console.log('cadCli',cpfcli);
-        teste = Crud.selAllentregas()
-       // console.log('cadCli teste',teste);
-        return teste
-    })();
-    seAll.then(function(){
-        let result = Promise.resolve(seAll)
-        result.then(function(v){
-            console.log(v)
-        res.render('../views/cliente/menuprincipal',{trk:v});
-    }).catch()         
-
-    }).catch(function(erro){
-        res.status(erro).send(req.body)
-        //res.send("error",erro)
-        //res.render('../views/cliente/menuprincipal');
-    })
-
-
-
-
-    res.render('../views/entregador/menuprincipal-entregador');
-})
-app.get('/menuprincipal-empresa', function(req, res){
-    res.render('../views/empresa/menuprincipal-empresa');
-})
-app.get('/endereco', function(req, res){
-    res.render('../views/cliente/endereco');
+app.get('/cadastro-endereco', function(req, res){
+    res.render('../views/cliente/cadendereco');
 })
 app.get('/recuperar', function(req, res){
     res.render('../views/recuperar');
@@ -222,9 +206,56 @@ app.get('/cadastroemp', function(req, res){
 app.get('/cadastroent', function(req, res){
     res.render('../views/entregador/cadastroent');
 })
+app.get('/rastreio', function(req, res){
+    let seAll = (async ()=>{
+        //console.log('cadCli',cpfcli);
+        teste = Crud.selAllRastreio(cpfcli)
+       // console.log('cadCli teste',teste);
+        return teste
+    })();
+    seAll.then(function(){
+        let result = Promise.resolve(seAll)
+        result.then(function(v){
+            Cliente.conn.query(`select * from enderecos join clientes where clientes.cpf=enderecos.cpfcnpj`).then(function(rows){
+                console.table(rows[0].map(w=>w))
+            })
+            console.log(v)
+        res.render('../views/cliente/rastreio',{trk:v});
+    }).catch()         
+
+    }).catch(function(erro){
+        res.status(erro).send(req.body)
+        //res.send("error",erro)
+        //res.render('../views/cliente/menuprincipal');
+    })  
+    //res.render('../views/cliente/rastreio');
+  
+})
 app.get('/rastreio/:rastreio', function(req, res){
     res.render('../views/cliente/mapa',{rastreio:req.params.rastreio});
    // res.send('ola '+ req.params.rastreio);
+})
+app.get('/encomendas', function(req, res){
+    let seAll = (async ()=>{
+        //console.log('cadCli',cpfcli);
+        teste = Crud.selAllEntrega()
+       // console.log('cadCli teste',teste);
+        return teste
+    })();
+    seAll.then(function(){
+        let result = Promise.resolve(seAll)
+        result.then(function(v){
+            console.log(v)
+        res.render('../views/entregador/encomendas',{trk:v});
+    }).catch()         
+
+    }).catch(function(erro){
+        res.status(erro).send(req.body)
+        //res.send("error",erro)
+        //res.render('../views/cliente/menuprincipal');
+    })  
+    //res.render('../views/cliente/rastreio');
+  
 })
 
 app.post('/cadastro', function(req, res){
@@ -236,6 +267,7 @@ app.post('/cadastro', function(req, res){
     
     let cadCli       = cliObj();
     cadCli.nome      = req.body.nome;
+    cadCli.tel       = req.body.phone;
     cadCli.sobrenome = req.body.sobrenome;
     cadCli.senha     = req.body.password;
     cadCli.email      = req.body.txtEmail;
@@ -251,14 +283,14 @@ app.post('/cadastro', function(req, res){
     })();
     resultCli.then(function(){
         //res.redirect('/save')
-        res.redirect('/endereco');
+        res.redirect("/login")
     }).catch(function(erro){
         res.send("nao cadastrado "+erro)
     })
     
 })
 
-app.post('/endereco', function(req, res){
+app.post('/cadendereco', function(req, res){
 
     function cliObj(){
         var Cli          = {};
@@ -287,7 +319,7 @@ app.post('/endereco', function(req, res){
 
     })()
     cadendereco.then(function(){
-        res.redirect("/login")
+        res.redirect("/endereco")
     }).catch(function(erro){
         res.send("erro endereco"+erro)
     })
@@ -311,12 +343,14 @@ app.post('/cadastroent', function(req, res){
     let cadEnt       = cliObj();
     cadEnt.nome      = req.body.nome;
     cadEnt.sobrenome = req.body.sobrenome;
+    cadEnt.tel       = req.body.phone;
     cadEnt.senha     = req.body.password;
     cadEnt.email     = req.body.txtEmail;
     cadEnt.dataNasc  = req.body.data;
     cadEnt.cpf       = req.body.cpf;
+    cadEnt.tpcnh       = req.body.tpcnh;
     cadEnt.cnh       = req.body.cnh;
-    cadEnt.veiculo   = req.body.veiculo;
+    cadEnt.veiculo   = req.body.tpveiculo;
     cadEnt.placa     = req.body.txtPlaca;
    
    
@@ -346,6 +380,7 @@ app.post('/cadastroemp', function(req, res){
     let cadEmp       = cliObj();
     cadEmp.nome      = req.body.nome;
     cadEmp.fantasia  = req.body.fantasia;
+    cadEmp.tel       = req.body.phone;
     cadEmp.senha     = req.body.senha;
     cadEmp.email     = req.body.email;
     cadEmp.dataFund  = req.body.data;
