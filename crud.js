@@ -303,6 +303,21 @@ var  CrudCli = {
 
     },
 
+    async selEndPk(pk){
+        const endPk = await Endereco.findByPk(pk).then(function(artigos){
+        
+            var teste = artigos.dataValues
+            return teste
+            //console.log(teste)
+            //console.log("artigo " + artigos.dataValues.nome)
+    
+        })
+            
+    return endPk
+
+
+    },
+
     async selAllRastreio(user){
         const seall = await Produtos.findAll({
             where:{cpfCliente:user,
@@ -312,20 +327,26 @@ var  CrudCli = {
                   return row.dataValues
                 });
               })
-            
-            
-            
-            
-            //.then(function(artigos){
-        
-            //    var teste = artigos
-            //    return teste})
                 return seall
 
 
     },
+    async selRastreio(track){
+        const seall = await Produtos.findAll({
+            where:{codRastreio:track                
+            }}).then(res => {
+                return res.map(row => {
+                  return row.dataValues
+                });
+              })
+                return seall
+    },
     async selAllEntrega(){
-        const seall = await Produtos.findAll().then(res => {
+        const seall = await Produtos.findAll({
+            where:{ cpfEntregador: null
+
+            }}
+        ).then(res => {
                 return res.map(row => {
                   return row.dataValues
                 });
@@ -334,6 +355,33 @@ var  CrudCli = {
                 return seall
 
 
+    },
+    async selAllEntregaEnt(cpf){
+        const seall = await Produtos.findAll({
+            where:{ cpfEntregador: cpf
+
+            }}
+        ).then(res => {
+                return res.map(row => {
+                  return row.dataValues
+                });
+              })
+        
+                return seall
+
+
+    },
+    async upProduto(cod){
+
+        const updt = await Produtos.findByPk(cod.Pk);
+        //console.log(produto);
+        updt.cpfEntregador = cod.cpf;
+        updt.statustrk = "E";
+
+        const resultadoSave = await updt.save();
+        //console.log("teste",resultadoSave);
+        return resultadoSave
+        
     }
 
 

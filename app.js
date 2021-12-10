@@ -9,6 +9,8 @@ const sequelize = require('./db');
 const Crud = require('./crud');
 //const createtest = require('./firebase');
 const adiciOnar = require("./firebase")
+const EventEmitter =require ('events');
+const res = require('express/lib/response');
 //const {db} = require('firebase')
 //const mapa = require("https://maps.googleapis.com/maps/api/js?key=AIzaSyAC1DXQau7-c5Pdzt0na-FA5P2VcJF8Zus&callback=mapInit")
 
@@ -33,6 +35,7 @@ app.get('/firebase-app.js.map', function(req, res) {
 
 var cpfcnpj
 var cpfcli
+var cpfent
 var idcli
 var endecli
 var endeemp
@@ -170,6 +173,77 @@ res.render('../views/entregador/menuprincipal-entregador');
 app.get('/menuprincipal-empresa', function(req, res){
     res.render('../views/empresa/menuprincipal-empresa');
 })
+app.get('/historico', function(req, res){
+
+//    const eventEmitter=new EventEmitter (); 
+//    eventEmitter.on ('teste', ()=> { console.log ('Olá, mundo, josh!');
+//}); 
+//eventEmitter.emit ('teste');
+    
+    res.render('../views/historico');
+})
+app.get('/detalhes/:rastreio', function(req, res){
+    var rast = req.params.rastreio
+    const rastreio = (async()=>{
+        var track = Crud.selRastreio(rast)
+        return track
+    })()
+    rastreio.then(function(){
+        let result = Promise.resolve(rastreio)
+        result.then(function(v){
+            //console.log(v)
+            //console.log(v[0].endCliente)
+            //console.log(v[0].endEmpresa)
+           
+            
+
+            var endEmp = Crud.selEndPk(v[0].endEmpresa)
+            
+            endEmp.then(function(){
+                let result = Promise.resolve(endEmp)
+                result.then(function(s){
+                    //console.log(s)
+                    
+                    var endCli = Crud.selEndPk(v[0].endCliente)
+                    endCli.then(function(){
+                        let result = Promise.resolve(endCli)
+                        result.then(function(t){
+                            
+                            res.render('../views/entregador/detalhes',{track:v,empresa:s,cliente:t});
+                        }).catch()
+                        
+                    }).catch()
+                }).catch()
+                
+            }).catch()
+            
+            
+        }).catch()
+        
+    }).catch()
+    
+})
+app.post('/detalhes/:rastreio', function(req, res){
+    function cliObj(){
+        var Cli          = {};
+        return Cli;
+    }
+    let upProd = cliObj()
+    upProd.Pk       = req.body.trk;
+    upProd.cpf      = cpfent;
+    var updt = (async()=>{
+        console.log(upProd)
+        var up = await Crud.upProduto(upProd)
+        return up
+    })()
+    updt.then(function(){
+        res.redirect('/encomendas')//alert("concluiu")//res.redirect("/endereco")
+    }).catch(function(erro){
+        res.send("erro endereco"+erro)
+    })
+
+})
+
 app.get('/endereco', function(req, res){
     let seeEnd = (async ()=>{
         //console.log('cadCli',cpfcli);
@@ -216,9 +290,9 @@ app.get('/rastreio', function(req, res){
     seAll.then(function(){
         let result = Promise.resolve(seAll)
         result.then(function(v){
-            Cliente.conn.query(`select * from enderecos join clientes where clientes.cpf=enderecos.cpfcnpj`).then(function(rows){
-                console.table(rows[0].map(w=>w))
-            })
+           // Cliente.conn.query(`select * from enderecos join clientes where clientes.cpf=enderecos.cpfcnpj`).then(function(rows){
+            //    console.table(rows[0].map(w=>w))
+           // })
             console.log(v)
         res.render('../views/cliente/rastreio',{trk:v});
     }).catch()         
@@ -257,6 +331,32 @@ app.get('/encomendas', function(req, res){
     //res.render('../views/cliente/rastreio');
   
 })
+app.get('/encomendas-ativas', function(req, res){
+    let seAll = (async ()=>{
+        //console.log('cadCli',cpfcli);
+        teste = Crud.selAllEntregaEnt(cpfent)
+       // console.log('cadCli teste',teste);
+        return teste
+    })();
+    seAll.then(function(){
+        let result = Promise.resolve(seAll)
+        result.then(function(v){
+            console.log(v)
+        res.render('../views/entregador/encomendas-ativas',{trk:v});
+    }).catch()         
+
+    }).catch(function(erro){
+        res.status(erro).send(req.body)
+        //res.send("error",erro)
+        //res.render('../views/cliente/menuprincipal');
+    })  
+    //res.render('../views/cliente/rastreio');
+  
+})
+app.get('/entregas/:rastreio', function(req, res){
+    res.render('../views/entregador/entregas',{rastreio:req.params.rastreio});
+   // res.send('ola '+ req.params.rastreio);
+})
 
 app.post('/cadastro', function(req, res){
 
@@ -290,7 +390,7 @@ app.post('/cadastro', function(req, res){
     
 })
 
-app.post('/cadendereco', function(req, res){
+app.post('/cadastro-endereco', function(req, res){
 
     function cliObj(){
         var Cli          = {};
@@ -464,7 +564,7 @@ app.post('/login-entregador', function(req, res){
         //console.log('loginCli');
         const val = await Crud.valLoginEnt(loginCli)
         if(val.email == loginCli.email && val.senha == loginCli.senha){
-            cpfcli = val.cpf
+            cpfent = val.cpf
             
             return true
         }else{

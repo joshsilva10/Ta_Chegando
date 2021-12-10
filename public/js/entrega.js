@@ -28,7 +28,8 @@ const firebaseApp = initializeApp({
 });
 */
 
-var ref
+var ref = document.getElementById("rastrk").innerText
+console.log(ref)
 const db = getFirestore(app);
 
  function autoUpdate() {
@@ -37,54 +38,19 @@ const db = getFirestore(app);
       
       var newPoint = new google.maps.LatLng(position.coords.latitude, 
                                             position.coords.longitude);
-        console.log("geolocation")
-        console.log(position.coords.latitude)
+        //console.log("geolocation")
+        //console.log(position.coords.latitude)
         if(!ref){
-          console.log("entrei no if")
-        try {
-          console.log("ref", ref)
-           var hello = fireb(position.coords.latitude,position.coords.longitude)
-
-           var p = Promise.resolve(hello)
-           p.then(function(v){
-             console.log("agora vai",v.id)
-             ref = v.id
-             console.log("agora vai ref",ref)
-           })
-
-            console.log("Document written with ID if: ", ref);
-        
-          } catch (e) {
-            console.error("Error adding document: ", e);
-          }
+          window.alert("codigo de rastreio não identificado")
         }else{
-          console.log("entrei no else");
-          console.log("ref1", ref);
-          /* 
-          var atualiza = (async ()=>{
-             var re = await upfireb(position.coords.latitude,position.coords.longitude)
-             
-          })()
-            atualiza.then(function(){
-              console.log('atualiza ', atualiza)
-              
-            }).catch(function(erro){
-                console.log(erro)
-            })
-            */
-            //(async ()=>{
+          
               var re = upfireb(position.coords.latitude,position.coords.longitude)
               var p = Promise.resolve(re)
            p.then(function(v){
              console.log("agora vai else",v)
              
            })
-           //})()
-            
-
-           
-          //console.log("Document written with ID: ", ref.PromiseResult);
-          //console.log("ref1", ref)
+          
         }
 
 
@@ -110,24 +76,7 @@ const db = getFirestore(app);
     setTimeout(autoUpdate, 5000);
   }
 
-  
 
-
-
-  
-  async function fireb(lat,long){
-    const docRef = await addDoc(collection(db, "rastreio"), {
-        lat: lat,
-        long: long
-      }).then(function(artigos){
-        var up = artigos
-        console.log("artigos",up)
-        return up
-      })
-      //console.log("teste",docRef.id)
-     //var re = docRef.id
-      return docRef;
-  }
 
   async function upfireb(lat,long){
     const docRefup = await updateDoc(doc(db, "rastreio", ref), {

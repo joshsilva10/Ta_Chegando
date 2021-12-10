@@ -59,6 +59,22 @@ button {
     font-size: 150%;
 }
 
+p#rastreio {
+    text-align: center;
+    padding: 5%;
+    border: none;
+    background-color: #FFC93C;
+    width: 80%;
+    height: 45%;
+    position: center;
+    border-radius: 10px;
+    margin: 0 0 3% 6%;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.349);
+    font-family: DKWoolwich;
+    color: #31326f;
+    font-size: 150%;
+}
+
 button:hover {
     text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.349);
     background-color: #31326f;
@@ -81,6 +97,9 @@ img#icon {
     padding-left: 0%;
     width: 32%;
 }
+img#iconLogin {
+    height: 6.5rem;
+}
 
 /*Login*/
 
@@ -89,7 +108,9 @@ div#headerLogin {
     border-radius: 16px;
     margin-bottom: 1%;
     margin-top: -10pt;
-    height: 5%;
+    height: 6.5rem;
+ 
+    
 }
 
 div#Login {
@@ -213,6 +234,13 @@ h2{
     font-family: DKWoolwich;
     color: #31326f;
     font-size: 100%;
+    margin: 4% 0% 0% 10%;
+}
+h3{
+
+    font-family: DKWoolwich;
+    color: rgb(71, 69, 69);
+    font-size: 90%;
     margin: 4% 0% 0% 10%;
 }
 select{

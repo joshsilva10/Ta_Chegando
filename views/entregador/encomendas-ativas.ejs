@@ -10,8 +10,6 @@
     <script  src="/js/ajuste.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAC1DXQau7-c5Pdzt0na-FA5P2VcJF8Zus&callback=mapInit"
     async defer></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 </head>
 <body>
     <header>
@@ -19,19 +17,10 @@
             <a href="home"><img id="iconLogin" src="./files/Icon.png" width="100px" alt="icone"></a>
         </div>
     </header>
-
     <div id="rastreio">
-        <a href="/encomendas" ><button type="button" class="clickon">ENCOMENDAS</button></a>
-        <a href="/encomendas-ativas" ><button type="button" class="clickon">ENCOMENDAS ATIVAS</button></a>
-        <a href="/historico" ><button type="button" class="clickon" >HISTÓRICO</button></a>
-        <a href="/opcoes" ><button type="button" class="clickon" >OPÇÕES</button></a>
+        <%for(var i=0;i<trk.length;i++) {%>
+        <a href="entregas/<%=trk[i].codRastreio%>" ><button type="button" class="clickon"><%=trk[i].codRastreio%></button></a>
+        <%}%>
     </div>
-    
-    
-   <!-- <div id="map"></div>-->
+   
 </body>
-<script>
-    
-    autoUpdateEnt()
-</script>
-</html>
