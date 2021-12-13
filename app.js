@@ -67,9 +67,29 @@ app.get('/login', function(req, res){
 })
 
 app.get('/produtos', function(req, res){
-    res.render('../views/empresa/produtos');
+    let seeProd= (async ()=>{
+        //console.log('cadCli',cpfcli);
+        teste = Crud.selAllProd(cpfcnpj)
+       // console.log('cadCli teste',teste);
+        return teste
+    })();
+    seeProd.then(function(){
+        let result = Promise.resolve(seeProd)
+        result.then(function(v){
+            console.log(v)
+            res.render('../views/empresa/produtos',{prod:v});
+    }).catch(function(erro){
+        res.status(erro).send(req.body)
+        
+    })         
+
+    }).catch(function(erro){
+        res.status(erro).send(req.body)
+        
+    })  
+    
 })
-app.post('/produtos', function(req, res){
+app.post('/cadastro-produtos', function(req, res){
     var trackid
     function cliObj(){
         var Cli          = {};
@@ -174,13 +194,12 @@ app.get('/menuprincipal-empresa', function(req, res){
     res.render('../views/empresa/menuprincipal-empresa');
 })
 app.get('/historico', function(req, res){
-
-//    const eventEmitter=new EventEmitter (); 
-//    eventEmitter.on ('teste', ()=> { console.log ('Olá, mundo, josh!');
-//}); 
-//eventEmitter.emit ('teste');
     
     res.render('../views/historico');
+})
+app.get('/opcoes', function(req, res){
+    
+    res.render('../views/opcoes');
 })
 app.get('/detalhes/:rastreio', function(req, res){
     var rast = req.params.rastreio
@@ -210,17 +229,35 @@ app.get('/detalhes/:rastreio', function(req, res){
                         result.then(function(t){
                             
                             res.render('../views/entregador/detalhes',{track:v,empresa:s,cliente:t});
-                        }).catch()
+                        }).catch(function(erro){
+                            res.status(erro).send(req.body)
+                            
+                        })
                         
-                    }).catch()
-                }).catch()
+                    }).catch(function(erro){
+                        res.status(erro).send(req.body)
+                        
+                    })
+                }).catch(function(erro){
+                    res.status(erro).send(req.body)
+                    
+                })
                 
-            }).catch()
+            }).catch(function(erro){
+                res.status(erro).send(req.body)
+                
+            })
             
             
-        }).catch()
+        }).catch(function(erro){
+            res.status(erro).send(req.body)
+            
+        })
         
-    }).catch()
+    }).catch(function(erro){
+        res.status(erro).send(req.body)
+        
+    })
     
 })
 app.post('/detalhes/:rastreio', function(req, res){
@@ -260,10 +297,60 @@ app.get('/endereco', function(req, res){
 
     }).catch(function(erro){
         res.status(erro).send(req.body)
-        //res.send("error",erro)
-        //res.render('../views/cliente/menuprincipal');
+        
     })  
-   // res.render('../views/cliente/endereco');
+   
+})
+app.get('/atualiza-endereco/:endereco', function(req, res){
+    let seeEnd = (async ()=>{
+        //console.log('cadCli',cpfcli);
+        teste = Crud.selEndPk(req.params.endereco)
+       // console.log('cadCli teste',teste);
+        return teste
+    })();
+    seeEnd.then(function(){
+        let result = Promise.resolve(seeEnd)
+        result.then(function(v){
+            console.log(v)
+        res.render('../views/cliente/atualiza-endereco',{end:v});
+    }).catch(function(erro){
+        res.status(erro).send(req.body)
+        
+    })         
+
+    }).catch(function(erro){
+        res.status(erro).send(req.body)
+        
+    })  
+   
+})
+app.post('/atualiza-endereco/:endereco', function(req, res){
+    function cliObj(){
+        var Cli          = {};
+        return Cli;
+    }
+
+    let cadEnd              = cliObj();
+    cadEnd.id               = req.body.id;
+    cadEnd.cep              = req.body.cep;
+    cadEnd.rua              = req.body.rua;
+    cadEnd.numero           = req.body.numero;
+    cadEnd.complemento      = req.body.complemento;
+    cadEnd.bairro           = req.body.bairro;
+    cadEnd.cidade           = req.body.cidade;
+    cadEnd.uf               = req.body.uf;
+    cadEnd.cpfcnpj          = req.body.cpf;
+
+    let cadendereco = (async()=>{
+        let val = await Crud.upEnd(cadEnd)
+
+    })()
+    cadendereco.then(function(){
+        res.redirect("/endereco")
+    }).catch(function(erro){
+        res.send("erro endereco"+erro)
+    })
+
 })
 app.get('/cadastro-endereco', function(req, res){
     res.render('../views/cliente/cadendereco');
@@ -321,12 +408,14 @@ app.get('/encomendas', function(req, res){
         result.then(function(v){
             console.log(v)
         res.render('../views/entregador/encomendas',{trk:v});
-    }).catch()         
+    }).catch(function(erro){
+        res.status(erro).send(req.body)
+        
+    })         
 
     }).catch(function(erro){
         res.status(erro).send(req.body)
-        //res.send("error",erro)
-        //res.render('../views/cliente/menuprincipal');
+        
     })  
     //res.render('../views/cliente/rastreio');
   
@@ -343,7 +432,10 @@ app.get('/encomendas-ativas', function(req, res){
         result.then(function(v){
             console.log(v)
         res.render('../views/entregador/encomendas-ativas',{trk:v});
-    }).catch()         
+    }).catch(function(erro){
+        res.status(erro).send(req.body)
+        
+    })         
 
     }).catch(function(erro){
         res.status(erro).send(req.body)
@@ -355,6 +447,68 @@ app.get('/encomendas-ativas', function(req, res){
 })
 app.get('/entregas/:rastreio', function(req, res){
     res.render('../views/entregador/entregas',{rastreio:req.params.rastreio});
+   // res.send('ola '+ req.params.rastreio);
+})
+app.get('/produto/:produto', function(req, res){
+    var rast = req.params.produto
+    const rastreio = (async()=>{
+        var track = Crud.selRastreio(rast)
+        return track
+    })()
+    rastreio.then(function(){
+        let result = Promise.resolve(rastreio)
+        result.then(function(v){
+            //console.log(v)
+            //console.log(v[0].endCliente)
+            //console.log(v[0].endEmpresa)
+           
+            
+
+            var endEmp = Crud.selEndPk(v[0].endEmpresa)
+            
+            endEmp.then(function(){
+                let result = Promise.resolve(endEmp)
+                result.then(function(s){
+                    //console.log(s)
+                    
+                    var endCli = Crud.selEndPk(v[0].endCliente)
+                    endCli.then(function(){
+                        let result = Promise.resolve(endCli)
+                        result.then(function(t){
+                            
+                            res.render('../views/empresa/produto',{track:v,empresa:s,cliente:t});
+                        }).catch(function(erro){
+                            res.status(erro).send(req.body)
+                            
+                        })
+                        
+                    }).catch(function(erro){
+                        res.status(erro).send(req.body)
+                        
+                    })
+                }).catch(function(erro){
+                    res.status(erro).send(req.body)
+                    
+                })
+                
+            }).catch(function(erro){
+                res.status(erro).send(req.body)
+                
+            })
+            
+            
+        }).catch(function(erro){
+            res.status(erro).send(req.body)
+            
+        })
+        
+    }).catch(function(erro){
+        res.status(erro).send(req.body)
+        
+    })
+})
+app.get('/cadastro-produtos', function(req, res){
+    res.render('../views/empresa/cadastro-produtos');
    // res.send('ola '+ req.params.rastreio);
 })
 

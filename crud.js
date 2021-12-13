@@ -371,12 +371,41 @@ var  CrudCli = {
 
 
     },
+    async selAllProd(prod){
+        const seall = await Produtos.findAll({
+            where:{cpfEmpresa:prod               
+            }}).then(res => {
+                return res.map(row => {
+                  return row.dataValues
+                });
+              })
+                return seall
+    },
     async upProduto(cod){
 
         const updt = await Produtos.findByPk(cod.Pk);
         //console.log(produto);
         updt.cpfEntregador = cod.cpf;
         updt.statustrk = "E";
+
+        const resultadoSave = await updt.save();
+        //console.log("teste",resultadoSave);
+        return resultadoSave
+        
+    },
+    async upEnd(cod){
+
+        const updt = await Endereco.findByPk(cod.id);
+        //console.log(produto);
+        
+            updt.cep              = cod.cep,
+            updt.rua              = cod.rua,
+            updt.numero           = cod.numero,
+            updt.complemento      = cod.complemento,
+            updt.bairro           = cod.bairro,
+            updt.cidade           = cod.cidade,
+            updt.uf               = cod.uf,
+            updt.cpfcnpj          = cod.cpfcnpj
 
         const resultadoSave = await updt.save();
         //console.log("teste",resultadoSave);

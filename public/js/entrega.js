@@ -73,7 +73,7 @@ const db = getFirestore(app);
     }); 
   
     // Call the autoUpdate() function every 5 seconds
-    setTimeout(autoUpdate, 5000);
+    setTimeout(autoUpdate, 2000);
   }
 
 

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style.css">
-    <title>Tá Chegando - Cadastrar</title>
+    <title>Tá Chegando - Encomendas ativas</title>
     <link rel="icon" href="/files/Icon.png">
     <script  src="/js/ajuste.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAC1DXQau7-c5Pdzt0na-FA5P2VcJF8Zus&callback=mapInit"
@@ -21,6 +21,7 @@
         <%for(var i=0;i<trk.length;i++) {%>
         <a href="entregas/<%=trk[i].codRastreio%>" ><button type="button" class="clickon"><%=trk[i].codRastreio%></button></a>
         <%}%>
+        <button onclick="back()">VOLTAR</button>
     </div>
    
 </body>

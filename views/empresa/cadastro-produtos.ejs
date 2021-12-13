@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/style.css">
+    <title>Tá Chegando - Endereço</title>
+    <link rel="icon" href="/files/Icon.png">
+    <script  src="/js/local.js"></script>
+    <script  src="/js/ajuste.js"></script>
+</head>
+
+<body>
+    <header>
+        <div id="headerLogin">
+            <a href="home"><img id="iconLogin" src="./files/Icon.png" width="100px" alt="icone"></a>
+        </div>
+    </header>
+    <main>
+        <div id="Login">
+
+            <div id="corpo">
+                <form id='form' method="POST">
+                <h1 id='form'>NOVO PRODUTO</h1>
+                
+                <input type="text" name="produto" id="produto" placeholder="PRODUTO" required>
+                <input type="text" name="cpf" id="cpf" placeholder="CPF CLIENTE" required>
+                <input type="text" name="descricao" id="descricao" placeholder="DESCRICAO DO PRODUTO" required>
+                <input type="text" name="endempresa" id="endempresa" placeholder="ENDERECO DISTRIBUIÇÃO" required>
+                <!--<input type="text" name="status" id="status" placeholder="STATUS" required>-->
+                <h2>STATUS:</h2>
+                <select name="status" id="status" required>
+                    <option value="A">ATIVO</option>
+                    <option value="C">CANCELADO</option>
+                    <option value="D">DISPONIVEL</option>
+                  </select>
+
+            </div>
+            <div id="opc2">
+                <button type="submit" id="login" > Cadastrar</button>
+            </div>
+        </form>
+        <button onclick="backprod()">VOLTAR</button>
+            
+        </div>
+    </main>
+    <footer>
+     
+    </footer>
+        
+</body>
+
+</html>

@@ -18,26 +18,24 @@
     <div id="rastreio">
         <%for(var i=0;i<track.length;i++) {%>
         <p id="rastreio"><%=track[i].codRastreio%></p>
-        
+        <h2>INFORMACOES DO PRODUTO</h2>
+        <h3>RASTREIO : <%=track[i].codRastreio%></h3>
+        <h3>PRODUTO/DESCRICAO : <%=track[i].produto%> / <%=track[i].descricao%></h3>
+        <h3>STATUS : <%=track[i].statusTrk%></h3>
         
         <h2>ENDERECO DE COLETA</h2>
-        <h3><%=empresa.cep%></h3>
-        <h3><%=empresa.rua%> - <%=empresa.numero%> (<%=empresa.complemento%>)</h3>
-        <h3><%=empresa.bairro%> / <%=empresa.cidade%> - <%=empresa.uf%></h3>
+        <h3>CEP : <%=empresa.cep%></h3>
+        <h3>RUA: <%=empresa.rua%> - Nº <%=empresa.numero%>  complemento(<%=empresa.complemento%>)</h3>
+        <h3>BAIRRO : <%=empresa.bairro%> / CIDADE : <%=empresa.cidade%> - UF : <%=empresa.uf%></h3>
         
 
         <h2>ENDERECO DE ENTREGA</h2>
-        <h3><%=cliente.cep%></h3>
-        <h3><%=cliente.rua%> - <%=cliente.numero%> (<%=cliente.complemento%>)</h3>
-        <h3><%=cliente.bairro%> / <%=cliente.cidade%> - <%=cliente.uf%></h3>
-        <form method="post">
-            <input type="number" name="trk" value="<%=track[i].id%>"hidden>
-        
-            <button type="submit" class="clickon">aceitar</button>
-        </form>
+        <h3>CEP :<%=cliente.cep%></h3>
+        <h3>RUA: <%=cliente.rua%> - Nº <%=cliente.numero%> complemento(<%=cliente.complemento%>)</h3>
+        <h3>BAIRRO : <%=cliente.bairro%> / CIDADE : <%=cliente.cidade%> - UF : <%=cliente.uf%></h3>
         <%}%>
-        <button onclick="backprod()">VOLTAR</button>
         
+        <button onclick="backprod()">VOLTAR</button>
     </div>
    
 </body>

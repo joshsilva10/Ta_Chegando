@@ -33,6 +33,18 @@ div#rastreio {
     padding: 4%;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.349);
 }
+div#producao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #dbf6e9;
+    width: 40%;
+    height: auto;
+    margin: 0% 20% 0% 25%;
+    border-radius: 10px;
+    padding: 4%;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.349);
+}
 
 div#header {
     width: 40%;
@@ -210,6 +222,10 @@ h1 {
 h1#form {
     text-align: center;
 }
+
+
+
+
 
 div#recu2 {
     width: 55%;

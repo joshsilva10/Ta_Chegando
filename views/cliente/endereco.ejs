@@ -19,7 +19,7 @@
     <div id="rastreio">
         <a href="/cadastro-endereco" ><button type="button" class="clickon">NOVO</button></a>
         <%for(var i=0;i<trk.length;i++) {%>
-            <a href="cadendereco/<%=trk[i].id%>" ><button type="button" class="clickon"><%=trk[i].rua%>, <%=trk[i].numero%> - <%=trk[i].bairro%> - <%=trk[i].uf%></button></a>
+            <a href="atualiza-endereco/<%=trk[i].id%>" ><button type="button" class="clickon"><%=trk[i].rua%>, <%=trk[i].numero%> - <%=trk[i].bairro%> - <%=trk[i].uf%></button></a>
             <%}%>
             <button onclick="back()">VOLTAR</button>
     </div>
